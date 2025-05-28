@@ -1,0 +1,929 @@
+/* --- General Body and Container Styles --- */
+
+body {
+    font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    /* Tipografía más moderna */
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+    /* Fondo más suave */
+    color: #343a40;
+    /* Color de texto principal */
+    line-height: 1.6;
+    /* Mejorar legibilidad del texto */
+}
+
+.main-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    /* Bordes más redondeados */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    /* Sombra más pronunciada */
+    min-height: 60vh;
+}
+
+h1,
+h2,
+h3 {
+    color: #28a745;
+    /* Un verde más vibrante */
+    text-align: center;
+    margin-bottom: 25px;
+    /* Más espacio debajo de los títulos */
+    font-weight: 600;
+    /* Un poco más de negrita */
+}
+
+
+/* --- Header and Navigation Styles --- */
+
+.main-header {
+    background-color: #28a745;
+    /* Verde vibrante */
+    color: white;
+    padding: 15px 0;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+    /* Sombra más definida */
+    position: sticky;
+    /* Sticky header */
+    top: 0;
+    z-index: 1000;
+    /* Asegura que esté sobre otros elementos */
+}
+
+.main-header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.main-header .logo {
+    color: white;
+    font-size: 2em;
+    /* Logo más grande */
+    font-weight: bold;
+    text-decoration: none;
+    letter-spacing: 1px;
+    /* Espaciado de letras */
+    transition: transform 0.3s ease;
+    /* Animación al pasar el mouse */
+}
+
+.main-header .logo:hover {
+    transform: scale(1.05);
+    /* Ligeramente más grande al pasar el mouse */
+}
+
+.main-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.main-nav li {
+    margin-right: 30px;
+    /* Más espacio entre elementos de navegación */
+}
+
+.main-nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 8px 0;
+    /* Más padding para los enlaces */
+    position: relative;
+    /* Para el efecto de subrayado */
+    transition: color 0.3s ease;
+}
+
+.main-nav a::after {
+    /* Efecto de subrayado animado */
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background-color: white;
+    transition: width 0.3s ease;
+}
+
+.main-nav a:hover::after,
+.main-nav .active a::after {
+    width: 100%;
+}
+
+.main-nav a:hover {
+    color: #e2f0d9;
+    /* Tono de verde más claro */
+}
+
+.user-actions {
+    display: flex;
+    align-items: center;
+}
+
+.user-actions span {
+    color: white;
+    margin-right: 15px;
+    font-weight: 600;
+}
+
+.user-actions .btn-login,
+.user-actions .btn-register,
+.user-actions .btn-logout {
+    background-color: #ffffff;
+    color: #28a745;
+    padding: 10px 20px;
+    /* Más padding para los botones */
+    border-radius: 25px;
+    /* Botones más redondeados */
+    text-decoration: none;
+    font-weight: bold;
+    margin-left: 15px;
+    /* Más espacio entre botones */
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+    /* Animaciones */
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    /* Sombra sutil */
+}
+
+.user-actions .btn-login:hover,
+.user-actions .btn-register:hover,
+.user-actions .btn-logout:hover {
+    background-color: #e6e6e6;
+    color: #1e7e34;
+    transform: translateY(-2px);
+    /* Efecto "lift" */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+
+/* --- Messages Framework Styles --- */
+
+.messages {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+    text-align: center;
+}
+
+.messages li {
+    padding: 12px 20px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    font-weight: 500;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    animation: fadeIn 0.5s ease-out;
+    /* Animación de aparición */
+}
+
+.messages .success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.messages .error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.messages .info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+}
+
+
+/* --- Welcome Page Styles --- */
+
+.welcome-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 200px);
+    /* Ajuste de altura */
+    padding: 20px;
+}
+
+.welcome-card {
+    background-color: #ffffff;
+    padding: 50px;
+    /* Más padding */
+    border-radius: 15px;
+    /* Más redondeado */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    /* Sombra más profunda */
+    text-align: center;
+    max-width: 700px;
+    /* Más ancho */
+    width: 100%;
+}
+
+.welcome-card h1 {
+    color: #28a745;
+    margin-bottom: 25px;
+    font-size: 3em;
+    /* Título más grande */
+}
+
+.welcome-card p {
+    color: #555;
+    margin-bottom: 35px;
+    font-size: 1.2em;
+    /* Texto más grande */
+}
+
+.welcome-options {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    /* Más espacio entre los botones de opción */
+    margin-bottom: 40px;
+}
+
+.btn-welcome {
+    background-color: #28a745;
+    color: white;
+    padding: 20px 40px;
+    /* Más padding */
+    border-radius: 30px;
+    /* Más redondeado */
+    text-decoration: none;
+    font-size: 1.3em;
+    /* Texto más grande */
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    /* Sombra inicial */
+}
+
+.btn-welcome i {
+    font-size: 2.5em;
+    /* Iconos más grandes */
+}
+
+.btn-welcome:hover {
+    background-color: #218838;
+    transform: translateY(-5px);
+    /* Efecto "lift" más pronunciado */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    /* Sombra al pasar el mouse */
+}
+
+.welcome-text {
+    font-style: italic;
+    color: #777;
+    margin-top: 35px;
+    font-size: 1em;
+}
+
+.welcome-illustration img {
+    max-width: 80%;
+    /* Ajuste de tamaño */
+    height: auto;
+    margin-top: 30px;
+    border-radius: 10px;
+    /* Bordes redondeados para la imagen */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+
+/* --- Property List & Grid Styles --- */
+
+.filter-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    /* Más espacio entre los elementos del formulario */
+    margin-bottom: 35px;
+    padding: 25px;
+    background-color: #f0f2f5;
+    /* Fondo más claro */
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    align-items: flex-end;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 200px;
+    /* Ancho mínimo un poco mayor */
+}
+
+.filter-group label {
+    margin-bottom: 8px;
+    font-weight: 600;
+    /* Más negrita */
+    color: #495057;
+}
+
+.filter-form input[type="text"],
+.filter-form input[type="number"],
+.filter-form select {
+    padding: 12px;
+    /* Más padding */
+    border: 1px solid #ced4da;
+    /* Borde más suave */
+    border-radius: 5px;
+    font-size: 1.05em;
+    /* Fuente un poco más grande */
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    /* Transiciones */
+}
+
+.filter-form input[type="text"]:focus,
+.filter-form input[type="number"]:focus,
+.filter-form select:focus {
+    border-color: #28a745;
+    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, .25);
+    /* Sombra al enfocar */
+    outline: none;
+}
+
+.filter-group.price-range {
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+    /* Más espacio entre los inputs de precio */
+}
+
+.filter-group.price-range input {
+    flex: 1;
+}
+
+.btn-filter,
+.btn-clear-filters {
+    padding: 12px 25px;
+    /* Más padding */
+    border: none;
+    border-radius: 25px;
+    /* Botones más redondeados */
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: none;
+    text-align: center;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    /* Animaciones */
+    align-self: flex-end;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.btn-filter {
+    background-color: #28a745;
+    color: white;
+}
+
+.btn-filter:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.btn-clear-filters {
+    background-color: #e9ecef;
+    color: #495057;
+    border: 1px solid #ced4da;
+}
+
+.btn-clear-filters:hover {
+    background-color: #dae0e5;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.property-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    /* Tarjetas un poco más anchas */
+    gap: 30px;
+    /* Más espacio entre tarjetas */
+    margin-top: 40px;
+}
+
+.property-card {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    /* Más redondeado */
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    /* Sombra más prominente */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    /* Animaciones */
+    display: flex;
+    /* Para mejor layout interno de la tarjeta */
+    flex-direction: column;
+}
+
+.property-card:hover {
+    transform: translateY(-8px);
+    /* Efecto "lift" más pronunciado */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.property-image {
+    width: 100%;
+    height: 220px;
+    /* Altura de imagen un poco mayor */
+    object-fit: cover;
+    display: block;
+    border-bottom: 1px solid #eee;
+}
+
+.property-card h3 {
+    margin: 18px 20px 12px;
+    /* Más padding */
+    color: #343a40;
+    font-size: 1.5em;
+    /* Título más grande */
+    text-align: left;
+    min-height: 2.8em;
+    /* Altura mínima para títulos de dos líneas */
+}
+
+.property-card p {
+    margin: 0 20px 12px;
+    color: #6c757d;
+    font-size: 1em;
+    line-height: 1.6;
+    text-align: left;
+}
+
+.property-card .property-info-row {
+    display: flex;
+    align-items: center;
+    margin: 0 20px 10px;
+    color: #5a6268;
+    font-size: 0.95em;
+}
+
+.property-card .property-info-row i {
+    margin-right: 8px;
+    color: #28a745;
+    font-size: 1.1em;
+}
+
+.property-card .btn-details {
+    display: block;
+    width: calc(100% - 40px);
+    /* Ajuste de ancho */
+    margin: 15px 20px 20px;
+    /* Más padding */
+    padding: 12px;
+    background-color: #28a745;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 8px;
+    /* Botón más redondeado */
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.property-card .btn-details:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+}
+
+.no-properties {
+    text-align: center;
+    padding: 40px;
+    color: #777;
+    font-size: 1.3em;
+    font-style: italic;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    margin-top: 30px;
+}
+
+
+/* --- Detail Page Styles --- */
+
+.property-detail {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.property-detail-image {
+    width: 100%;
+    max-height: 450px;
+    /* Un poco más grande */
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.property-detail h1 {
+    font-size: 3em;
+    /* Título más grande */
+    color: #28a745;
+    margin-bottom: 20px;
+}
+
+.property-detail p {
+    font-size: 1.15em;
+    /* Texto un poco más grande */
+    line-height: 1.8;
+    margin-bottom: 18px;
+    color: #495057;
+}
+
+.property-detail strong {
+    color: #343a40;
+}
+
+.property-detail .info-grid {
+    /* Nueva clase para organizar detalles */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    margin-bottom: 30px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+}
+
+.property-detail .info-item {
+    display: flex;
+    align-items: center;
+    font-size: 1.1em;
+    color: #343a40;
+}
+
+.property-detail .info-item i {
+    margin-right: 10px;
+    color: #28a745;
+    font-size: 1.3em;
+}
+
+.property-actions {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.property-actions a {
+    display: inline-block;
+    padding: 12px 25px;
+    border-radius: 25px;
+    /* Más redondeado */
+    text-decoration: none;
+    margin: 0 12px;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.property-actions a.edit-btn {
+    background-color: #17a2b8;
+    /* Azul claro */
+    color: white;
+}
+
+.property-actions a.edit-btn:hover {
+    background-color: #138496;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.property-actions a.delete-btn {
+    background-color: #dc3545;
+    /* Rojo */
+    color: white;
+}
+
+.property-actions a.delete-btn:hover {
+    background-color: #c82333;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+
+/* --- Form Styles (Agregar/Editar/Login/Register) --- */
+
+.form-container {
+    max-width: 650px;
+    /* Un poco más ancho */
+    margin: 40px auto;
+    padding: 40px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    /* Sombra más profunda */
+}
+
+.form-container h1 {
+    font-size: 2.5em;
+    /* Título más grande */
+    margin-bottom: 35px;
+}
+
+.form-container form p {
+    margin-bottom: 20px;
+    /* Más espacio entre campos */
+}
+
+.form-container form label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: #495057;
+    font-size: 1.05em;
+}
+
+.form-container form input[type="text"],
+.form-container form input[type="number"],
+.form-container form input[type="email"],
+.form-container form input[type="password"],
+.form-container form input[type="file"],
+.form-container form select,
+.form-container form textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    /* Más redondeado */
+    font-size: 1.05em;
+    box-sizing: border-box;
+    margin-top: 5px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-container form input[type="file"] {
+    padding: 8px;
+    /* Ajuste para input file */
+}
+
+.form-container form input[type="text"]:focus,
+.form-container form input[type="number"]:focus,
+.form-container form input[type="email"]:focus,
+.form-container form input[type="password"]:focus,
+.form-container form select:focus,
+.form-container form textarea:focus {
+    border-color: #28a745;
+    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, .25);
+    outline: none;
+}
+
+.form-container form textarea {
+    resize: vertical;
+    min-height: 120px;
+    /* Mayor altura mínima */
+}
+
+.form-container form button {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    /* Más padding */
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    /* Botón más redondeado */
+    font-size: 1.2em;
+    /* Texto más grande */
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    margin-top: 30px;
+    /* Más espacio arriba */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.form-container form button:hover {
+    background-color: #218838;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.form-container ul.errorlist {
+    color: #dc3545;
+    list-style-type: none;
+    padding: 0;
+    margin-top: 8px;
+    font-size: 0.95em;
+    background-color: #fef0f1;
+    border: 1px solid #fbc4c4;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.form-container ul.errorlist li {
+    margin-bottom: 5px;
+}
+
+.form-container p a {
+    /* Estilo para enlaces en formularios (login/register) */
+    color: #28a745;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.form-container p a:hover {
+    color: #218838;
+    text-decoration: underline;
+}
+
+
+/* --- Dashboard Specific Styles --- */
+
+.dashboard-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 30px;
+    /* Más padding */
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    /* Sombra más pronunciada */
+}
+
+.dashboard-header {
+    text-align: center;
+    margin-bottom: 50px;
+    /* Más espacio */
+    color: #343a40;
+}
+
+.dashboard-header h1 {
+    color: #28a745;
+    margin-bottom: 15px;
+    font-size: 3em;
+}
+
+.dashboard-header p {
+    font-size: 1.2em;
+    color: #555;
+}
+
+.dashboard-widgets {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    /* Widgets un poco más grandes */
+    gap: 30px;
+    /* Más espacio entre widgets */
+    margin-bottom: 40px;
+}
+
+.widget-card {
+    background-color: #fefefe;
+    /* Fondo más blanco */
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+    /* Más redondeado */
+    padding: 30px;
+    /* Más padding */
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    /* Sombra inicial */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.widget-card:hover {
+    transform: translateY(-8px);
+    /* Efecto "lift" más pronunciado */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    /* Sombra al pasar el mouse */
+}
+
+.widget-card h2 {
+    color: #343a40;
+    margin-bottom: 18px;
+    font-size: 1.8em;
+    /* Título más grande */
+}
+
+.widget-card p {
+    color: #6c757d;
+    margin-bottom: 25px;
+    line-height: 1.7;
+    font-size: 1.05em;
+}
+
+.btn-dashboard {
+    display: inline-block;
+    background-color: #28a745;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 25px;
+    /* Más redondeado */
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.btn-dashboard:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+
+/* --- Footer Styles --- */
+
+.main-footer {
+    background-color: #343a40;
+    /* Color oscuro */
+    color: white;
+    text-align: center;
+    padding: 25px 0;
+    /* Más padding */
+    margin-top: 50px;
+    /* Más espacio */
+    font-size: 0.95em;
+}
+
+
+/* --- Keyframe Animations --- */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* --- Responsive Design (Basic adjustments) --- */
+
+@media (max-width: 768px) {
+    .main-header-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    .main-nav ul {
+        flex-direction: column;
+        margin-top: 15px;
+    }
+    .main-nav li {
+        margin: 8px 0;
+    }
+    .user-actions {
+        margin-top: 15px;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .user-actions span {
+        margin-right: 0;
+    }
+    .user-actions .btn-login,
+    .user-actions .btn-register,
+    .user-actions .btn-logout {
+        margin-left: 0;
+        width: 80%;
+    }
+    .filter-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .filter-group {
+        min-width: unset;
+        width: 100%;
+    }
+    .btn-filter,
+    .btn-clear-filters {
+        width: 100%;
+        margin-top: 10px;
+    }
+    .property-grid {
+        grid-template-columns: 1fr;
+        /* Una columna en móviles */
+    }
+    .welcome-options {
+        flex-direction: column;
+    }
+    .btn-welcome {
+        width: 80%;
+        margin: 0 auto;
+    }
+}

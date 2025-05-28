@@ -1,0 +1,67 @@
+{# propiedades/templates/propiedades/base.html #} {% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}EasyRent{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'propiedades/styles.css' %}"> {# Carga Font Awesome para los iconos #}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <header class="main-header">
+        <div class="main-header-content">
+            <a href="{% url 'welcome_page' %}" class="logo">EasyRent</a>
+            <nav class="main-nav">
+                <ul>
+                    {# Definimos una variable para la URL actual para comparaciones limpias #} {% with current_url_name=request.resolver_match.url_name %}
+                    <li>
+                        <a href="{% url 'user_dashboard' %}" class="{% if current_url_name == 'user_dashboard' %}active{% endif %}">Menú Principal</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'lista_propiedades_frontend' %}" class="{% if current_url_name == 'lista_propiedades_frontend' %}active{% endif %}">Propiedades</a>
+                    </li>
+                    {% if user.is_authenticated %}
+                    <li>
+                        <a href="{% url 'mis_propiedades_frontend' %}" class="{% if current_url_name == 'mis_propiedades_frontend' %}active{% endif %}">Mis Propiedades</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'agregar_propiedad_frontend' %}" class="{% if current_url_name == 'agregar_propiedad_frontend' %}active{% endif %}">Agregar Propiedad</a>
+                    </li>
+                    {% endif %} {% endwith %}
+                </ul>
+            </nav>
+            <div class="user-actions">
+                {% if user.is_authenticated %}
+                <span>Hola, {{ user.username }}!</span>
+                <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-logout">Cerrar Sesión</button>
+                </form>
+                {% else %}
+                <a href="{% url 'login' %}" class="btn-login">Iniciar Sesión</a>
+                <a href="{% url 'register' %}" class="btn-register">Registrarse</a> {% endif %}
+            </div>
+        </div>
+    </header>
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+            {% endfor %}
+    </ul>
+    {% endif %}
+
+    <main class="main-container">
+        {% block content %} {# Contenido específico de cada página #} {% endblock %}
+    </main>
+
+    <footer class="main-footer">
+        <p>&copy; 2025 EasyRent. Todos los derechos reservados.</p>
+    </footer>
+</body>
+
+</html>

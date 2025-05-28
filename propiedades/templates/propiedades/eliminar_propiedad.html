@@ -1,0 +1,11 @@
+{# propiedades/templates/propiedades/eliminar_propiedad.html #} {% extends 'propiedades/base.html' %} {% block title %}Eliminar Propiedad - EasyRent{% endblock %} {% block content %}
+<div class="form-container">
+    <h1>Eliminar Propiedad</h1>
+    <p>¿Estás seguro de que deseas eliminar la propiedad "<strong>{{ propiedad.titulo }}</strong>"? Esta acción no se puede deshacer.</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="delete-confirm-button">Sí, Eliminar</button>
+        <a href="{% url 'detalle_propiedad_frontend' propiedad.pk %}" class="btn-dashboard">Cancelar</a> {# O a mis propiedades #}
+    </form>
+</div>
+{% endblock content %}

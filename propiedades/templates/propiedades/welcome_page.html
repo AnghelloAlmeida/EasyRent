@@ -1,0 +1,152 @@
+{# propiedades/templates/propiedades/welcome_page.html #} {% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenido a EasyRent</title>
+    {# Carga tu CSS personalizado #}
+    <link rel="stylesheet" href="{% static 'propiedades/styles.css' %}"> {# Carga Font Awesome para los iconos #}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Estilos específicos para la página de bienvenida si quieres que el fondo sea diferente */
+        
+        body {
+            background-color: #e0f2f7;
+            /* Un color de fondo suave para la bienvenida */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        /* ... (mantén el resto de tus estilos aquí, como .welcome-container, .welcome-card, etc.) ... */
+        
+        .welcome-card {
+            background-color: #ffffff;
+            padding: 50px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 700px;
+            width: 100%;
+            margin: auto;
+            /* Para centrar la tarjeta */
+        }
+        
+        .welcome-card h1 {
+            color: #28a745;
+            margin-bottom: 25px;
+            font-size: 3em;
+        }
+        
+        .welcome-card p {
+            color: #555;
+            margin-bottom: 35px;
+            font-size: 1.2em;
+        }
+        
+        .welcome-options {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .btn-welcome {
+            background-color: #28a745;
+            color: white;
+            padding: 20px 40px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 1.3em;
+            font-weight: bold;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-welcome i {
+            font-size: 2.5em;
+        }
+        
+        .btn-welcome:hover {
+            background-color: #218838;
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .welcome-text {
+            font-style: italic;
+            color: #777;
+            margin-top: 35px;
+            font-size: 1em;
+        }
+        
+        .welcome-illustration img {
+            max-width: 80%;
+            height: auto;
+            margin-top: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        /* Media Queries para Responsive */
+        
+        @media (max-width: 768px) {
+            .welcome-card {
+                padding: 30px;
+            }
+            .welcome-card h1 {
+                font-size: 2.5em;
+            }
+            .welcome-options {
+                flex-direction: column;
+                gap: 20px;
+            }
+            .btn-welcome {
+                width: 90%;
+                /* Ajuste para que los botones llenen más el ancho */
+                padding: 15px 30px;
+                font-size: 1.1em;
+            }
+            .btn-welcome i {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="welcome-container">
+        <div class="welcome-card">
+            <h1>Bienvenido a EasyRent</h1>
+            <p>¿Cómo deseas ingresar?</p>
+            <div class="welcome-options">
+                {% if user.is_authenticated %} {# Si el usuario ya está logueado, llévalo al dashboard #}
+                <a href="{% url 'user_dashboard' %}" class="btn-welcome user-option">
+                    <i class="fa-solid fa-user"></i> Usuario
+                </a>
+                {% else %} {# Si el usuario NO está logueado, llévalo a la página de login #}
+                <a href="{% url 'login' %}" class="btn-welcome user-option">
+                    <i class="fa-solid fa-user"></i> Usuario
+                </a>
+                {% endif %}
+                <a href="{% url 'admin:index' %}" class="btn-welcome admin-option">
+                    <i class="fa-solid fa-user-tie"></i> Administrador
+                </a>
+            </div>
+            <p class="welcome-text">Explora Propiedades. Tu Espacio Ideal, Sin Complicaciones. EasyRent</p>
+            <div class="welcome-illustration">
+                <img src="{% static 'propiedades/illustration.png' %}" alt="Ilustración de EasyRent">
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

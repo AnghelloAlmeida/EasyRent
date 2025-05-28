@@ -1,0 +1,9 @@
+{# propiedades/templates/propiedades/agregar_propiedad.html #} {% extends 'propiedades/base.html' %} {% block title %}Agregar Nueva Propiedad - EasyRent{% endblock %} {% block content %}
+<div class="form-container">
+    <h1>Agregar Nueva Propiedad</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %} {{ form.as_p }}
+        <button type="submit">Agregar Propiedad</button>
+    </form>
+</div>
+{% endblock content %}

@@ -1,0 +1,28 @@
+{# propiedades/templates/propiedades/user_dashboard.html #} {% extends 'propiedades/base.html' %} {% load static %} {% block title %}Mi Menú Principal - EasyRent{% endblock %} {% block content %}
+<div class="dashboard-container">
+    <div class="dashboard-header">
+        <h1>¡Hola, {{ user.username }}!</h1>
+        <p>Bienvenido a tu panel de control principal de EasyRent.</p>
+    </div>
+
+    <div class="dashboard-widgets">
+        <div class="widget-card">
+            <h2>Tus Propiedades</h2>
+            <p>Actualmente tienes <strong>{{ num_mis_propiedades }}</strong> propiedades listadas.</p>
+            <a href="{% url 'mis_propiedades_frontend' %}" class="btn-dashboard">Ver Mis Propiedades</a>
+        </div>
+
+        <div class="widget-card">
+            <h2>Publica una Nueva</h2>
+            <p>¿Tienes una nueva propiedad para alquilar o vender?</p>
+            <a href="{% url 'agregar_propiedad_frontend' %}" class="btn-dashboard">Agregar Nueva Propiedad</a>
+        </div>
+
+        <div class="widget-card">
+            <h2>Explora Propiedades</h2>
+            <p>Encuentra tu próximo hogar o inversión.</p>
+            <a href="{% url 'lista_propiedades_frontend' %}" class="btn-dashboard">Buscar Propiedades</a>
+        </div>
+    </div>
+</div>
+{% endblock content %}

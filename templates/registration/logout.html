@@ -1,0 +1,8 @@
+{# propiedades/templates/registration/logout.html #} {% extends 'propiedades/base.html' %} {% block title %}Sesión Cerrada - EasyRent{% endblock %} {% block content %}
+<div class="form-container" style="text-align: center;">
+    <h1>¡Has cerrado sesión!</h1>
+    <p>Gracias por usar EasyRent. Esperamos verte de nuevo pronto.</p>
+    <a href="{% url 'login' %}" class="btn-dashboard">Iniciar Sesión de Nuevo</a>
+    <a href="{% url 'welcome_page' %}" class="btn-dashboard">Ir a la Página Principal</a>
+</div>
+{% endblock content %}

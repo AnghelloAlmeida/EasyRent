@@ -1,0 +1,25 @@
+{# propiedades/templates/propiedades/mis_propiedades.html #} {% extends 'propiedades/base.html' %} {% load static %} {% block title %}Mis Propiedades - EasyRent{% endblock %} {% block content %}
+<h1>Mis Propiedades</h1>
+
+{% if propiedades %}
+<div class="property-grid">
+    {% for propiedad in propiedades %}
+    <div class="property-card">
+        {% if propiedad.imagen %}
+        <img src="{{ propiedad.imagen.url }}" alt="{{ propiedad.titulo }}" class="property-image"> {% else %}
+        <img src="{% static 'propiedades/default_property.png' %}" alt="Sin imagen" class="property-image"> {% endif %}
+        <h3>{{ propiedad.titulo }}</h3>
+        <p><strong>Ubicación:</strong> {{ propiedad.ciudad }}, {{ propiedad.direccion }}</p>
+        <p><strong>Precio:</strong> ${{ propiedad.precio|floatformat:2 }}</p>
+        <p><strong>Habitaciones:</strong> {{ propiedad.num_habitaciones }}</p>
+        <div class="property-actions">
+            <a href="{% url 'detalle_propiedad_frontend' propiedad.pk %}" class="btn-details">Ver Detalles</a>
+            <a href="{% url 'editar_propiedad_frontend' propiedad.pk %}" class="btn-details edit-btn">Editar</a>
+            <a href="{% url 'eliminar_propiedad_frontend' propiedad.pk %}" class="btn-details delete-btn">Eliminar</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p class="no-properties">Aún no has agregado ninguna propiedad. <a href="{% url 'agregar_propiedad_frontend' %}">¡Publica una ahora!</a></p>
+{% endif %} {% endblock content %}
