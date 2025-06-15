@@ -1,5 +1,6 @@
-/* --- General Body and Container Styles --- */
+/* propiedades/static/propiedades/styles.css */
 
+/* --- General Body and Container Styles --- */
 body {
     font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
     /* Tipografía más moderna */
@@ -37,21 +38,18 @@ h3 {
     /* Un poco más de negrita */
 }
 
-
 /* --- Header and Navigation Styles --- */
-
 .main-header {
     background-color: #28a745;
     /* Verde vibrante */
     color: white;
-    padding: 15px 0;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
-    /* Sombra más definida */
+    padding: 8px 0;
+    /* AJUSTADO: Restaurado a padding más compacto para la altura */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    /* AJUSTADO: Sombra más sutil */
     position: sticky;
-    /* Sticky header */
     top: 0;
     z-index: 1000;
-    /* Asegura que esté sobre otros elementos */
 }
 
 .main-header-content {
@@ -60,24 +58,26 @@ h3 {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 20px;
+    padding: 0 15px;
+    /* AJUSTADO: Restaurado a padding más ajustado a los lados */
 }
 
 .main-header .logo {
     color: white;
     font-size: 2em;
-    /* Logo más grande */
+    /* Mantenido, puedes ajustarlo si quieres un poco más pequeño */
     font-weight: bold;
     text-decoration: none;
     letter-spacing: 1px;
-    /* Espaciado de letras */
-    transition: transform 0.3s ease;
-    /* Animación al pasar el mouse */
+    transition: transform 0.2s ease;
+    /* AJUSTADO: Transición más rápida para el hover */
 }
 
 .main-header .logo:hover {
-    transform: scale(1.05);
-    /* Ligeramente más grande al pasar el mouse */
+    transform: scale(1.03);
+    /* AJUSTADO: Efecto hover más sutil */
+    text-shadow: none;
+    /* AÑADIDO: Eliminar sombra de texto al hover si se aplica en otro lado */
 }
 
 .main-nav ul {
@@ -85,106 +85,198 @@ h3 {
     margin: 0;
     padding: 0;
     display: flex;
+    align-items: center;
+    gap: 15px;
+    /* AJUSTADO: Restaurado a espacio más ajustado entre elementos */
 }
 
 .main-nav li {
-    margin-right: 30px;
-    /* Más espacio entre elementos de navegación */
+    margin-right: 0;
+    /* AJUSTADO: Se usa 'gap' en el 'ul' para el espaciado */
+}
+
+.main-nav li:last-child {
+    margin-right: 0;
 }
 
 .main-nav a {
     color: white;
     text-decoration: none;
-    font-weight: 600;
-    padding: 8px 0;
-    /* Más padding para los enlaces */
+    font-weight: 500;
+    /* AJUSTADO: Peso de fuente más ligero para los enlaces */
+    padding: 8px 10px;
+    /* AJUSTADO: Restaurado a padding más compacto */
     position: relative;
-    /* Para el efecto de subrayado */
-    transition: color 0.3s ease;
+    transition: color 0.2s ease, background-color 0.2s ease, border-radius 0.2s ease;
+    /* AJUSTADO: Transiciones más rápidas */
+    white-space: nowrap;
+    /* Evita que el texto del enlace se rompa en varias líneas */
+    border-radius: 4px;
+    /* AÑADIDO: Bordes ligeramente redondeados */
 }
 
 .main-nav a::after {
-    /* Efecto de subrayado animado */
     content: '';
     position: absolute;
     left: 0;
     bottom: 0;
     width: 0;
     height: 2px;
+    /* AJUSTADO: Línea más fina */
     background-color: white;
-    transition: width 0.3s ease;
-}
-
-.main-nav a:hover::after,
-.main-nav .active a::after {
-    width: 100%;
+    transition: width 0.2s ease;
+    /* AJUSTADO: Transición más rápida para la línea */
 }
 
 .main-nav a:hover {
-    color: #e2f0d9;
-    /* Tono de verde más claro */
+    color: #f0f0f0;
+    /* Color sutil al pasar el cursor */
+    background-color: rgba(255, 255, 255, 0.08);
+    /* Fondo sutil al pasar el cursor */
 }
 
+.main-nav a:hover::after {
+    width: 100%;
+}
+
+/* Estilo para el enlace activo */
+.main-nav .active a {
+    background-color: rgba(255, 255, 255, 0.15);
+    /* Fondo más notorio para el enlace activo */
+    border-radius: 4px;
+    /* Bordes redondeados para el activo */
+    color: white;
+    font-weight: 600;
+    /* Un poco más de negrita para el activo */
+}
+
+.main-nav .active a::after {
+    width: 100%;
+    background-color: white;
+}
+
+/* User Actions & Profile in Navbar */
 .user-actions {
     display: flex;
     align-items: center;
+    gap: 8px;
+    /* AJUSTE CLAVE: Reducido a 8px para más compactación */
+    flex-wrap: nowrap;
+    /* AJUSTE CLAVE: Evita que se envuelva a la siguiente línea en desktop */
+    justify-content: flex-end;
+    /* Alinea a la derecha */
 }
 
-.user-actions span {
+/* Contenedor del área de perfil (imagen + nombre + botón editar) */
+.profile-area {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    /* AJUSTE CLAVE: Reducido a 6px */
+    padding: 3px 6px;
+    /* AJUSTE CLAVE: Padding aún más compacto */
+    background-color: transparent;
+    transition: background-color 0.2s ease;
+    border-radius: 20px;
+}
+
+.profile-area:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Enlace de la imagen de perfil */
+.profile-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
     color: white;
-    margin-right: 15px;
-    font-weight: 600;
+    font-weight: normal;
+    white-space: nowrap;
 }
 
+/* Imagen de perfil en la navbar */
+.profile-link .profile-img {
+    width: 26px;
+    /* AJUSTE CLAVE: Tamaño ligeramente más pequeño */
+    height: 26px;
+    /* AJUSTE CLAVE: Tamaño ligeramente más pequeño */
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid white;
+    transition: transform 0.2s ease;
+}
+
+.profile-link .profile-img:hover {
+    transform: scale(1.08);
+}
+
+/* Texto de saludo del usuario */
+.user-actions .user-greeting {
+    color: white;
+    font-weight: 500;
+    white-space: nowrap;
+    text-shadow: none;
+    font-size: 0.9em;
+    /* AJUSTE CLAVE: Fuente ligeramente más pequeña */
+}
+
+/* Botones de Login/Register/Logout/Edit Profile */
 .user-actions .btn-login,
 .user-actions .btn-register,
-.user-actions .btn-logout {
+.user-actions .btn-logout,
+.user-actions .btn-profile-edit {
     background-color: #ffffff;
     color: #28a745;
-    padding: 10px 20px;
-    /* Más padding para los botones */
-    border-radius: 25px;
-    /* Botones más redondeados */
+    padding: 6px 12px;
+    /* AJUSTE CLAVE: Padding más pequeño para los botones */
+    border-radius: 20px;
     text-decoration: none;
-    font-weight: bold;
-    margin-left: 15px;
-    /* Más espacio entre botones */
-    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
-    /* Animaciones */
+    font-weight: 600;
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
     border: none;
     cursor: pointer;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    /* Sombra sutil */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    font-size: 0.85em;
+    /* AJUSTE CLAVE: Fuente aún más pequeña */
+    white-space: nowrap;
 }
 
 .user-actions .btn-login:hover,
 .user-actions .btn-register:hover,
-.user-actions .btn-logout:hover {
-    background-color: #e6e6e6;
-    color: #1e7e34;
-    transform: translateY(-2px);
-    /* Efecto "lift" */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+.user-actions .btn-logout:hover,
+.user-actions .btn-profile-edit:hover {
+    background-color: #f0f0f0;
+    color: #218838;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
+/* Asegura que el botón de logout mantenga el margen original si es necesario */
+.user-actions form {
+    display: flex;
+    align-items: center;
+    margin-left: 0;
+    /* Elimina cualquier margen izquierdo no deseado */
+}
 
 /* --- Messages Framework Styles --- */
-
 .messages {
     list-style: none;
-    padding: 0;
-    margin: 20px 0;
+    padding: 15px 20px;
+    margin: 20px auto;
+    /* Centrar los mensajes */
+    max-width: 800px;
+    border-radius: 8px;
+    font-size: 1em;
     text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .messages li {
-    padding: 12px 20px;
-    margin-bottom: 12px;
-    border-radius: 8px;
-    font-weight: 500;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-    animation: fadeIn 0.5s ease-out;
-    /* Animación de aparición */
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    font-weight: bold;
 }
 
 .messages .success {
@@ -205,29 +297,29 @@ h3 {
     border: 1px solid #bee5eb;
 }
 
+.messages .warning {
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+}
+
 
 /* --- Welcome Page Styles --- */
-
 .welcome-container {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: calc(100vh - 200px);
-    /* Ajuste de altura */
     padding: 20px;
 }
 
 .welcome-card {
     background-color: #ffffff;
     padding: 50px;
-    /* Más padding */
     border-radius: 15px;
-    /* Más redondeado */
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    /* Sombra más profunda */
     text-align: center;
     max-width: 700px;
-    /* Más ancho */
     width: 100%;
 }
 
@@ -235,21 +327,18 @@ h3 {
     color: #28a745;
     margin-bottom: 25px;
     font-size: 3em;
-    /* Título más grande */
 }
 
 .welcome-card p {
     color: #555;
     margin-bottom: 35px;
     font-size: 1.2em;
-    /* Texto más grande */
 }
 
 .welcome-options {
     display: flex;
     justify-content: center;
     gap: 30px;
-    /* Más espacio entre los botones de opción */
     margin-bottom: 40px;
 }
 
@@ -257,12 +346,9 @@ h3 {
     background-color: #28a745;
     color: white;
     padding: 20px 40px;
-    /* Más padding */
     border-radius: 30px;
-    /* Más redondeado */
     text-decoration: none;
     font-size: 1.3em;
-    /* Texto más grande */
     font-weight: bold;
     display: flex;
     flex-direction: column;
@@ -270,20 +356,16 @@ h3 {
     gap: 12px;
     transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    /* Sombra inicial */
 }
 
 .btn-welcome i {
     font-size: 2.5em;
-    /* Iconos más grandes */
 }
 
 .btn-welcome:hover {
     background-color: #218838;
     transform: translateY(-5px);
-    /* Efecto "lift" más pronunciado */
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-    /* Sombra al pasar el mouse */
 }
 
 .welcome-text {
@@ -295,26 +377,20 @@ h3 {
 
 .welcome-illustration img {
     max-width: 80%;
-    /* Ajuste de tamaño */
     height: auto;
     margin-top: 30px;
     border-radius: 10px;
-    /* Bordes redondeados para la imagen */
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-
 /* --- Property List & Grid Styles --- */
-
 .filter-form {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
-    /* Más espacio entre los elementos del formulario */
     margin-bottom: 35px;
     padding: 25px;
     background-color: #f0f2f5;
-    /* Fondo más claro */
     border-radius: 10px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     align-items: flex-end;
@@ -325,38 +401,29 @@ h3 {
     flex-direction: column;
     flex: 1;
     min-width: 200px;
-    /* Ancho mínimo un poco mayor */
 }
 
 .filter-group label {
     margin-bottom: 8px;
     font-weight: 600;
-    /* Más negrita */
     color: #495057;
 }
 
-.filter-form input[type="text"],
-.filter-form input[type="number"],
+.filter-form input,
 .filter-form select {
     padding: 12px;
-    /* Más padding */
     border: 1px solid #ced4da;
-    /* Borde más suave */
     border-radius: 5px;
     font-size: 1.05em;
-    /* Fuente un poco más grande */
     width: 100%;
     box-sizing: border-box;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    /* Transiciones */
 }
 
-.filter-form input[type="text"]:focus,
-.filter-form input[type="number"]:focus,
+.filter-form input:focus,
 .filter-form select:focus {
     border-color: #28a745;
     box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, .25);
-    /* Sombra al enfocar */
     outline: none;
 }
 
@@ -364,7 +431,6 @@ h3 {
     flex-direction: row;
     align-items: center;
     gap: 15px;
-    /* Más espacio entre los inputs de precio */
 }
 
 .filter-group.price-range input {
@@ -374,16 +440,13 @@ h3 {
 .btn-filter,
 .btn-clear-filters {
     padding: 12px 25px;
-    /* Más padding */
     border: none;
     border-radius: 25px;
-    /* Botones más redondeados */
     cursor: pointer;
     font-weight: bold;
     text-decoration: none;
     text-align: center;
     transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-    /* Animaciones */
     align-self: flex-end;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
@@ -413,52 +476,50 @@ h3 {
 
 .property-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    /* Tarjetas un poco más anchas */
+    grid-template-columns: 1fr;
+    /* MODIFICADO: Ahora solo una columna */
     gap: 30px;
-    /* Más espacio entre tarjetas */
     margin-top: 40px;
+    position: relative;
+    /* PARA EL SPINNER: Contenedor para el overlay */
 }
 
 .property-card {
     background-color: #ffffff;
     border: 1px solid #e0e0e0;
     border-radius: 12px;
-    /* Más redondeado */
     overflow: hidden;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    /* Sombra más prominente */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    /* Animaciones */
     display: flex;
-    /* Para mejor layout interno de la tarjeta */
     flex-direction: column;
 }
 
 .property-card:hover {
     transform: translateY(-8px);
-    /* Efecto "lift" más pronunciado */
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
 
+/* --- ESTILOS DE IMAGEN Y TEXTO DENTRO DE LA TARJETA (propiedad-card) --- */
+/* Modificado para que la imagen sea más grande y se vea mejor */
 .property-image {
     width: 100%;
-    height: 220px;
-    /* Altura de imagen un poco mayor */
+    /* Ocupa todo el ancho de la tarjeta */
+    height: 500px;
+    /* **AUMENTADA LA ALTURA FIJA para hacerla más grande en las tarjetas** */
     object-fit: cover;
+    /* **Recorta la imagen para que llene el espacio sin distorsionarse** */
     display: block;
+    /* Elimina cualquier espacio extra debajo de la imagen */
     border-bottom: 1px solid #eee;
 }
 
 .property-card h3 {
     margin: 18px 20px 12px;
-    /* Más padding */
     color: #343a40;
     font-size: 1.5em;
-    /* Título más grande */
     text-align: left;
     min-height: 2.8em;
-    /* Altura mínima para títulos de dos líneas */
 }
 
 .property-card p {
@@ -483,29 +544,92 @@ h3 {
     font-size: 1.1em;
 }
 
-.property-card .btn-details {
-    display: block;
-    width: calc(100% - 40px);
-    /* Ajuste de ancho */
-    margin: 15px 20px 20px;
-    /* Más padding */
-    padding: 12px;
+/* --- ESTILOS PARA LOS BOTONES EN "MIS PROPIEDADES" --- */
+.property-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 15px;
+    margin-top: auto;
+    border-top: 1px solid #eee;
+    background-color: #fcfcfc;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.property-actions .btn-details {
+    padding: 6px 10px;
     background-color: #28a745;
     color: white;
     text-align: center;
     text-decoration: none;
-    border-radius: 8px;
-    /* Botón más redondeado */
+    border-radius: 5px;
     font-weight: 600;
+    font-size: 0.8em;
     transition: background-color 0.3s ease, transform 0.2s ease;
+    width: 90px;
+    white-space: nowrap;
+    box-sizing: border-box;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-.property-card .btn-details:hover {
+.property-actions .btn-details:hover {
+    background-color: #218838;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+/* Estilos específicos para los colores de los botones de Editar y Eliminar en "Mis Propiedades" */
+.property-actions .edit-btn {
+    background-color: #17a2b8;
+    /* Azul claro */
+}
+
+.property-actions .edit-btn:hover {
+    background-color: #138496;
+}
+
+.property-actions .delete-btn {
+    background-color: #dc3545;
+    /* Rojo */
+}
+
+.property-actions .delete-btn:hover {
+    background-color: #c82333;
+}
+
+/* --- NUEVO ESTILO PARA EL BOTÓN "VER DETALLES" EN LA LISTA DE PROPIEDADES (Público) --- */
+.property-card .property-list-detail-btn {
+    display: inline-block;
+    /* CAMBIADO: Necesita ser inline-block para centrarse con text-align */
+    width: auto;
+    /* CAMBIADO: Para que el ancho se ajuste al contenido como los otros botones de dashboard */
+    margin: 15px auto 20px auto;
+    /* Mantener para centrar horizontalmente */
+    padding: 12px 25px;
+    /* Ajustar padding para que coincida con .btn-dashboard si es posible */
+    border-radius: 25px;
+    /* Ajustar border-radius para que coincida con .btn-dashboard si es posible */
+    background-color: #28a745;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    /* Asegurarse de que el peso de la fuente sea el mismo */
+    font-size: 0.9em;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.property-card .property-list-detail-btn:hover {
     background-color: #218838;
     transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
-.no-properties {
+/* --- FIN DE ESTILOS DE BOTONES --- */
+/* La clase .no-properties fue comentada/reemplazada por .no-properties-found-message para un control más específico */
+/* .no-properties {
     text-align: center;
     padding: 40px;
     color: #777;
@@ -515,11 +639,9 @@ h3 {
     border-radius: 10px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     margin-top: 30px;
-}
-
+} */
 
 /* --- Detail Page Styles --- */
-
 .property-detail {
     background-color: #ffffff;
     padding: 40px;
@@ -527,11 +649,14 @@ h3 {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
+/* Modificado para que la imagen en detalle sea más grande y se vea mejor */
 .property-detail-image {
     width: 100%;
-    max-height: 450px;
-    /* Un poco más grande */
+    /* Ocupa todo el ancho del contenedor */
+    max-height: 500px;
+    /* **AUMENTADA LA ALTURA MÁXIMA para hacerla más grande en detalle** */
     object-fit: cover;
+    /* **Escala la imagen para rellenar el espacio sin distorsionarse, recortando si es necesario.** */
     border-radius: 8px;
     margin-bottom: 30px;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
@@ -539,14 +664,12 @@ h3 {
 
 .property-detail h1 {
     font-size: 3em;
-    /* Título más grande */
     color: #28a745;
     margin-bottom: 20px;
 }
 
 .property-detail p {
     font-size: 1.15em;
-    /* Texto un poco más grande */
     line-height: 1.8;
     margin-bottom: 18px;
     color: #495057;
@@ -557,7 +680,6 @@ h3 {
 }
 
 .property-detail .info-grid {
-    /* Nueva clase para organizar detalles */
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 15px;
@@ -580,16 +702,18 @@ h3 {
     font-size: 1.3em;
 }
 
+/* Nota: La siguiente regla '.property-actions a' es para la página de detalle, no para la lista de propiedades */
 .property-actions {
+    /* Esto aplica a la página de detalle, si la tienes */
     margin-top: 40px;
     text-align: center;
 }
 
 .property-actions a {
+    /* Esto aplica a la página de detalle, si la tienes */
     display: inline-block;
     padding: 12px 25px;
     border-radius: 25px;
-    /* Más redondeado */
     text-decoration: none;
     margin: 0 12px;
     font-weight: bold;
@@ -599,7 +723,6 @@ h3 {
 
 .property-actions a.edit-btn {
     background-color: #17a2b8;
-    /* Azul claro */
     color: white;
 }
 
@@ -611,7 +734,6 @@ h3 {
 
 .property-actions a.delete-btn {
     background-color: #dc3545;
-    /* Rojo */
     color: white;
 }
 
@@ -621,29 +743,23 @@ h3 {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
-
 /* --- Form Styles (Agregar/Editar/Login/Register) --- */
-
 .form-container {
     max-width: 650px;
-    /* Un poco más ancho */
     margin: 40px auto;
     padding: 40px;
     background-color: #ffffff;
     border-radius: 12px;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-    /* Sombra más profunda */
 }
 
 .form-container h1 {
     font-size: 2.5em;
-    /* Título más grande */
     margin-bottom: 35px;
 }
 
 .form-container form p {
     margin-bottom: 20px;
-    /* Más espacio entre campos */
 }
 
 .form-container form label {
@@ -654,33 +770,20 @@ h3 {
     font-size: 1.05em;
 }
 
-.form-container form input[type="text"],
-.form-container form input[type="number"],
-.form-container form input[type="email"],
-.form-container form input[type="password"],
-.form-container form input[type="file"],
+.form-container form input,
 .form-container form select,
 .form-container form textarea {
     width: 100%;
     padding: 12px;
     border: 1px solid #ced4da;
     border-radius: 6px;
-    /* Más redondeado */
     font-size: 1.05em;
     box-sizing: border-box;
     margin-top: 5px;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.form-container form input[type="file"] {
-    padding: 8px;
-    /* Ajuste para input file */
-}
-
-.form-container form input[type="text"]:focus,
-.form-container form input[type="number"]:focus,
-.form-container form input[type="email"]:focus,
-.form-container form input[type="password"]:focus,
+.form-container form input:focus,
 .form-container form select:focus,
 .form-container form textarea:focus {
     border-color: #28a745;
@@ -691,26 +794,21 @@ h3 {
 .form-container form textarea {
     resize: vertical;
     min-height: 120px;
-    /* Mayor altura mínima */
 }
 
 .form-container form button {
     display: block;
     width: 100%;
     padding: 15px;
-    /* Más padding */
     background-color: #28a745;
     color: white;
     border: none;
     border-radius: 25px;
-    /* Botón más redondeado */
     font-size: 1.2em;
-    /* Texto más grande */
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
     margin-top: 30px;
-    /* Más espacio arriba */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
@@ -723,13 +821,12 @@ h3 {
 .form-container ul.errorlist {
     color: #dc3545;
     list-style-type: none;
-    padding: 0;
+    padding: 10px;
     margin-top: 8px;
     font-size: 0.95em;
     background-color: #fef0f1;
     border: 1px solid #fbc4c4;
     border-radius: 5px;
-    padding: 10px;
 }
 
 .form-container ul.errorlist li {
@@ -737,7 +834,6 @@ h3 {
 }
 
 .form-container p a {
-    /* Estilo para enlaces en formularios (login/register) */
     color: #28a745;
     text-decoration: none;
     font-weight: bold;
@@ -749,24 +845,19 @@ h3 {
     text-decoration: underline;
 }
 
-
 /* --- Dashboard Specific Styles --- */
-
 .dashboard-container {
     max-width: 1200px;
     margin: 40px auto;
     padding: 30px;
-    /* Más padding */
     background-color: #ffffff;
     border-radius: 12px;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-    /* Sombra más pronunciada */
 }
 
 .dashboard-header {
     text-align: center;
     margin-bottom: 50px;
-    /* Más espacio */
     color: #343a40;
 }
 
@@ -784,58 +875,59 @@ h3 {
 .dashboard-widgets {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    /* Widgets un poco más grandes */
     gap: 30px;
-    /* Más espacio entre widgets */
     margin-bottom: 40px;
+    align-items: stretch; /* Mantiene las tarjetas con la misma altura */
 }
 
 .widget-card {
     background-color: #fefefe;
-    /* Fondo más blanco */
     border: 1px solid #e9ecef;
     border-radius: 12px;
-    /* Más redondeado */
     padding: 30px;
-    /* Más padding */
     text-align: center;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-    /* Sombra inicial */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;          /* Añadido: Habilita Flexbox */
+    flex-direction: column; /* Añadido: Apila los elementos verticalmente */
+    justify-content: space-between; /* Añadido: Empuja el último elemento (botón) al final */
+    height: 100%;           /* Añadido: Asegura que la tarjeta ocupa toda la altura disponible en el grid */
 }
 
 .widget-card:hover {
     transform: translateY(-8px);
-    /* Efecto "lift" más pronunciado */
+    background-color: #e0f0e4;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-    /* Sombra al pasar el mouse */
 }
 
 .widget-card h2 {
     color: #343a40;
     margin-bottom: 18px;
     font-size: 1.8em;
-    /* Título más grande */
+    flex-shrink: 0; /* Evita que el título se encoja */
 }
 
 .widget-card p {
     color: #6c757d;
-    margin-bottom: 25px;
+    margin-bottom: 25px; /* Mantener este margen si quieres el espacio debajo del texto */
     line-height: 1.7;
     font-size: 1.05em;
+    flex-grow: 1; /* Permite que el párrafo ocupe el espacio restante */
 }
 
+/* Asegurarse de que .btn-dashboard sea inline-block para que text-align: center funcione */
 .btn-dashboard {
     display: inline-block;
     background-color: #28a745;
     color: white;
     padding: 12px 25px;
     border-radius: 25px;
-    /* Más redondeado */
     text-decoration: none;
     font-weight: bold;
     transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin: 0; /* MUY IMPORTANTE: Elimina cualquier margen externo que pueda desalinear */
+    flex-shrink: 0; /* Evita que el botón se encoja */
 }
 
 .btn-dashboard:hover {
@@ -844,24 +936,17 @@ h3 {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
-
 /* --- Footer Styles --- */
-
 .main-footer {
     background-color: #343a40;
-    /* Color oscuro */
     color: white;
     text-align: center;
     padding: 25px 0;
-    /* Más padding */
     margin-top: 50px;
-    /* Más espacio */
     font-size: 0.95em;
 }
 
-
 /* --- Keyframe Animations --- */
-
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -873,57 +958,361 @@ h3 {
     }
 }
 
+/* --- Animaciones y Transiciones --- */
+/* Estilos para el indicador de carga (spinner) */
+.loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.7);
+    /* Fondo semi-transparente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    /* Asegura que esté por encima de otros elementos */
+    transition: opacity 0.3s ease-in-out;
+    /* Transición para la aparición/desaparición */
+    opacity: 0;
+    /* Por defecto invisible */
+    pointer-events: none;
+    /* Permite hacer clic a través del overlay cuando es invisible */
+    border-radius: 12px;
+    /* Coincide con el contenedor de propiedades */
+}
 
-/* --- Responsive Design (Basic adjustments) --- */
+.loading-overlay.visible {
+    opacity: 1;
+    /* Visible */
+    pointer-events: all;
+    /* Bloquea clics cuando es visible */
+}
 
+.spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-top: 4px solid #007bff;
+    /* Color de tu spinner */
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    /* Animación de rotación */
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* --- Estilos para la página de edición de perfil (edit_profile.html) --- */
+.profile-card {
+    max-width: 700px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    /* Para centrar la imagen y el título */
+}
+
+.profile-card h2 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+.profile-card .profile-avatar-large {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #4CAF50;
+    /* Un borde verde para la foto de perfil */
+    margin-bottom: 20px;
+}
+
+.profile-form-section {
+    text-align: left;
+    /* Para alinear los formularios a la izquierda */
+    margin-top: 30px;
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+}
+
+.profile-form-section legend {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #ddd;
+}
+
+.profile-form-section p {
+    margin-bottom: 15px;
+    /* Espacio entre campos del formulario */
+}
+
+.profile-form-section label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #444;
+}
+
+.profile-form-section input[type="text"],
+.profile-form-section input[type="email"],
+.profile-form-section input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 1em;
+    margin-top: 5px;
+}
+
+.profile-form-section input[type="file"] {
+    padding: 5px;
+    /* Los inputs de tipo file suelen necesitar menos padding */
+}
+
+.profile-form-buttons {
+    margin-top: 30px; /* Puedes aumentar este valor para bajar todo el bloque de botones */
+    text-align: center;
+    /* Añadido para que los botones se comporten como bloques y se centren */
+    display: flex; /* Usamos flexbox para controlar el espaciado horizontal */
+    justify-content: center; /* Centra los elementos flex */
+    gap: 20px; /* Espacio entre los botones */
+}
+
+/* Modificación de la clase .btn para que solo defina el estilo general */
+.btn { /* APLICA A TODOS LOS BOTONES CON LA CLASE .btn */
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    border: none; /* Aseguramos que no haya bordes por defecto */
+    /* Eliminamos el margin: 0 20px; de aquí porque usaremos 'gap' en el contenedor flex */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Añadimos una sombra por defecto */
+}
+
+.btn-primary {
+    background-color: #28a745;
+    /* Verde */
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #218838;
+    transform: translateY(-2px); /* Añadimos efecto hover */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    /* Gris */
+    color: white;
+    /* Eliminamos margin-left: 10px; de aquí, ahora lo controla 'gap' */
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+    transform: translateY(-2px); /* Añadimos efecto hover */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* --- Responsive Design --- */
 @media (max-width: 768px) {
     .main-header-content {
         flex-direction: column;
         text-align: center;
     }
+
     .main-nav ul {
         flex-direction: column;
         margin-top: 15px;
     }
+
     .main-nav li {
         margin: 8px 0;
     }
+
     .user-actions {
         margin-top: 15px;
         flex-direction: column;
         gap: 10px;
     }
+
     .user-actions span {
         margin-right: 0;
     }
+
     .user-actions .btn-login,
     .user-actions .btn-register,
-    .user-actions .btn-logout {
+    .user-actions .btn-logout,
+    .user-actions .btn-profile-edit {
         margin-left: 0;
         width: 80%;
     }
+
     .filter-form {
         flex-direction: column;
         align-items: stretch;
     }
+
     .filter-group {
         min-width: unset;
         width: 100%;
     }
+
     .btn-filter,
     .btn-clear-filters {
         width: 100%;
         margin-top: 10px;
     }
+
     .property-grid {
         grid-template-columns: 1fr;
-        /* Una columna en móviles */
     }
+
     .welcome-options {
         flex-direction: column;
     }
+
     .btn-welcome {
         width: 80%;
         margin: 0 auto;
     }
+
+    .property-actions {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 10px;
+    }
+
+    .property-actions .btn-details {
+        max-width: 100%;
+        flex-basis: auto;
+        margin: 5px 0;
+    }
+
+    /* Ajuste para los botones de perfil en móviles */
+    .profile-form-buttons {
+        flex-direction: column; /* Apila los botones verticalmente en pantallas pequeñas */
+        gap: 10px; /* Espacio vertical entre ellos */
+    }
+}
+
+
+/* ==========================================================================
+   Sección de Estilos para Mensajes (Añadido para centrar el mensaje de "no hay resultados")
+   ========================================================================== */
+
+/* Estilos para centrar el mensaje de "no hay resultados" */
+.no-properties-found-message {
+    text-align: center;
+    /* Centra el texto horizontalmente dentro del div */
+    margin-top: 50px;
+    /* Añade espacio superior para que no esté pegado a los filtros */
+    margin-bottom: 50px;
+    /* Añade espacio inferior */
+    width: 100%;
+    /* Asegura que ocupe todo el ancho disponible para centrar bien */
+    padding: 20px;
+    /* Espacio interno si lo deseas */
+    box-sizing: border-box;
+    /* Asegura que el padding no añada ancho extra */
+}
+
+.no-properties-found-message p {
+    font-size: 1.1em;
+    /* Un poco más grande para que se note */
+    color: #555;
+    /* Un color de texto que contraste */
+    margin-bottom: 10px;
+    /* Espacio entre los párrafos */
+}
+
+.no-properties-found-message a {
+    color: #007bff;
+    /* Color para el enlace "limpiar los filtros" */
+    text-decoration: underline;
+    /* Subrayado para indicar que es un enlace */
+}
+
+/* Estilos para la sección de Reseña de IA */
+.ia-review-section {
+    background-color: #f8fcf8;
+    /* Fondo muy claro para destacar */
+    border: 1px solid #d4edda;
+    /* Borde suave */
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    /* Sombra sutil */
+}
+
+.ia-review-section h2 {
+    color: #28a745;
+    /* Color verde de tu marca */
+    font-size: 1.8em;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    /* Espacio entre el icono y el texto */
+}
+
+.ia-review-section h2 i {
+    color: #1e8e3e;
+    /* Un verde un poco más oscuro para el icono */
+    font-size: 1.2em;
+    /* Tamaño del icono */
+}
+
+.ia-review-text {
+    font-size: 1.1em;
+    line-height: 1.6;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.ia-rating {
+    font-size: 1.2em;
+    color: #555;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.ia-rating .fa-star {
+    font-size: 1.5em;
+}
+
+.ia-rating .gold {
+    color: #FFD700;
+    /* Color oro para estrellas llenas */
+}
+
+.ia-rating .light-grey {
+    color: #ccc;
+    /* Gris claro para estrellas vacías */
+}
+
+.ia-rating .rating-number {
+    font-weight: bold;
+    margin-left: 5px;
+    color: #28a745;
 }

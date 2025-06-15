@@ -1,62 +1,110 @@
+# propiedades/forms.py
+
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Propiedad # Asegúrate de que tu modelo Propiedad esté importado aquí
+from django.contrib.auth.forms import UserCreationForm
+from .models import Propiedad, Profile  # ¡IMPORTANTE: Asegúrate de importar Propiedad y Profile!
 
-# Formulario para el registro de nuevos usuarios
-class UserRegisterForm(UserCreationForm):
-    # Añadimos el campo de email. Lo hacemos requerido ya que UserCreationForm por defecto
-    # no lo incluye de forma obligatoria.
-    email = forms.EmailField(
-        required=True,
-        widget=forms.EmailInput(attrs={'placeholder': 'Tu correo electrónico'})
-    )
 
-    class Meta:
-        model = User
-        # Definimos los campos que se mostrarán en el formulario de registro.
-        # 'password' y 'password2' son manejados automáticamente por UserCreationForm.
-        fields = ['username', 'email']
-
-    # Opcional: Puedes sobrescribir el método save si necesitas lógica adicional.
-    # Por ejemplo, para asegurar que el email se guarda correctamente.
-    def save(self, commit=True):
-        user = super().save(commit=False)
-        user.email = self.cleaned_data["email"]
-        if commit:
-            user.save()
-        return user
-
-# Formulario para agregar y editar propiedades
+# Formulario para agregar/editar propiedades
 class PropiedadForm(forms.ModelForm):
     class Meta:
         model = Propiedad
-        # Definimos los campos que se mostrarán en el formulario.
-        # Excluimos 'propietario', 'disponible' y 'fecha_publicacion' porque se manejan en la vista o automáticamente.
         fields = [
-            'titulo',
-            'descripcion',
-            'direccion',
-            'ciudad',
-            'pais',
-            'precio',
-            'num_habitaciones',
-            'num_banos',
-            'metros_cuadrados',
-            'imagen',
-            'tipo_propiedad', # Este campo debe coincidir con el campo de tu modelo Propiedad
+            'titulo', 'descripcion', 'direccion', 'ciudad', 'pais',
+            'precio', 'num_habitaciones', 'num_banos', 'metros_cuadrados',
+            'imagen_principal',  # <--- ¡CORRECCIÓN CLAVE AQUÍ: CAMBIADO DE 'imagen' A 'imagen_principal'!
+            'disponible', 'tipo_propiedad',
+            'tiene_garaje',
+            'caracteristicas_adicionales'
         ]
-        # Widgets para personalizar la apariencia de los campos HTML
         widgets = {
-            'titulo': forms.TextInput(attrs={'placeholder': 'Título de la propiedad (ej. Casa Moderna)'}),
-            'descripcion': forms.Textarea(attrs={'rows': 5, 'placeholder': 'Descripción detallada de la propiedad...'}),
-            'direccion': forms.TextInput(attrs={'placeholder': 'Dirección completa (ej. Av. Principal y Calle Secundaria)'}),
-            'ciudad': forms.TextInput(attrs={'placeholder': 'Ciudad (ej. Guayaquil)'}),
-            'pais': forms.TextInput(attrs={'placeholder': 'País (ej. Ecuador)'}),
-            'precio': forms.NumberInput(attrs={'placeholder': 'Ej. 150000.00', 'step': '0.01'}),
-            'num_habitaciones': forms.NumberInput(attrs={'placeholder': 'Ej. 3', 'min': '1'}),
-            'num_banos': forms.NumberInput(attrs={'placeholder': 'Ej. 2', 'min': '1'}),
-            'metros_cuadrados': forms.NumberInput(attrs={'placeholder': 'Ej. 120.50', 'step': '0.01'}),
-            # 'imagen' no necesita widget si es ImageField, el navegador se encarga.
-            # 'tipo_propiedad' no necesita widget si es CharField con choices, se renderizará como select.
+            'titulo': forms.TextInput(attrs={'class': 'form-control'}),
+            'descripcion': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
+            'direccion': forms.TextInput(attrs={'class': 'form-control'}),
+            'ciudad': forms.TextInput(attrs={'class': 'form-control'}),
+            'pais': forms.TextInput(attrs={'class': 'form-control', 'readonly': 'readonly'}),
+            'precio': forms.NumberInput(attrs={'class': 'form-control'}),
+            'num_habitaciones': forms.NumberInput(attrs={'class': 'form-control', 'min': 0}),
+            'num_banos': forms.NumberInput(attrs={'class': 'form-control', 'min': 0}),
+            'metros_cuadrados': forms.NumberInput(attrs={'class': 'form-control', 'min': 0}),
+            'tipo_propiedad': forms.Select(attrs={'class': 'form-control'}),
+            'caracteristicas_adicionales': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Ej: Piscina, Jardín, Balcón, Seguridad 24/7'}),
+        }
+        labels = {
+            'titulo': 'Título',
+            'descripcion': 'Descripción',
+            'direccion': 'Dirección',
+            'ciudad': 'Ciudad',
+            'pais': 'País',
+            'precio': 'Precio ($)',
+            'num_habitaciones': 'Número de Habitaciones',
+            'num_banos': 'Número de Baños',
+            'metros_cuadrados': 'Metros Cuadrados (m²)',
+            'imagen_principal': 'Imagen Principal', # <--- ¡Y TAMBIÉN AQUÍ EN LOS LABELS!
+            'disponible': 'Disponible para Alquiler/Venta',
+            'tipo_propiedad': 'Tipo de Propiedad',
+            'tiene_garaje': '¿Tiene Garaje?',
+            'caracteristicas_adicionales': 'Características Adicionales',
+        }
+
+
+# Formulario para el registro de usuarios (SignUpView utiliza este)
+class UserRegisterForm(UserCreationForm):
+    email = forms.EmailField(required=True)
+
+    class Meta(UserCreationForm.Meta):
+        model = User
+        fields = UserCreationForm.Meta.fields + ('email', 'first_name', 'last_name',)
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError("Este correo electrónico ya está registrado.")
+        return email
+
+
+# Formulario para editar el perfil del usuario (datos básicos del User)
+class UserProfileForm(forms.ModelForm):
+    """
+    Formulario para que los usuarios editen su información básica del modelo User de Django.
+    """
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email']
+
+        labels = {
+            'first_name': 'Nombre',
+            'last_name': 'Apellido',
+            'email': 'Correo Electrónico',
+        }
+
+        widgets = {
+            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+        }
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        # Excluye al usuario actual para permitir que guarde su propio email sin conflicto
+        if User.objects.filter(email=email).exclude(pk=self.instance.pk).exists():
+            raise forms.ValidationError("Este correo electrónico ya está registrado por otro usuario.")
+        return email
+
+# NUEVO FORMULARIO: Para la foto de perfil
+class ProfileUpdateForm(forms.ModelForm):
+    """
+    Formulario para que los usuarios editen su foto de perfil.
+    """
+    class Meta:
+        model = Profile
+        fields = ['image'] # Solo el campo de imagen
+
+        labels = {
+            'image': 'Foto de Perfil',
+        }
+
+        widgets = {
+            'image': forms.FileInput(attrs={'class': 'form-control'}), # Usar FileInput para la subida de archivos
         }

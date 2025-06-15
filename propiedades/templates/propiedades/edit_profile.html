@@ -1,0 +1,35 @@
+{# propiedades/templates/propiedades/edit_profile.html #}
+{% extends 'propiedades/base.html' %}
+{% load static %}
+
+{% block title %}Editar Perfil{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2>Editar Perfil</h2>
+    <hr>
+    <form method="POST" enctype="multipart/form-data"> {# ¡IMPORTANTE: enctype="multipart/form-data" es crucial para la subida de archivos! #}
+        {% csrf_token %}
+
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Información de Usuario</legend>
+            {{ u_form.as_p }} {# Renderiza el formulario de usuario (first_name, last_name, email) #}
+        </fieldset>
+
+        <fieldset class="form-group mt-4">
+            <legend class="border-bottom mb-4">Foto de Perfil</legend>
+            <div class="text-center mb-3">
+                {# Muestra la imagen actual del perfil #}
+                <img src="{{ user.profile.image.url }}" alt="Foto de Perfil Actual" class="img-thumbnail"
+                     style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover;">
+            </div>
+            {{ p_form.as_p }} {# Renderiza el formulario de la foto de perfil #}
+        </fieldset>
+
+        <div class="form-group mt-4">
+            <button class="btn btn-primary" type="submit">Actualizar Perfil</button>
+            <a href="{% url 'user_dashboard' %}" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

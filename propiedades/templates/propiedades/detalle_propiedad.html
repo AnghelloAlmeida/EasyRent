@@ -1,29 +1,140 @@
-{# propiedades/templates/propiedades/detalle_propiedad.html #} {% extends 'propiedades/base.html' %} {% load static %} {% block title %}{{ propiedad.titulo }} - EasyRent{% endblock %} {% block content %}
+{# propiedades/templates/propiedades/detalle_propiedad.html #}
+
+{% extends 'propiedades/base.html' %}
+{% load static %}
+
+{% block title %}
+    {{ propiedad.titulo }} - EasyRent {# Este es el ÚNICO block title en este archivo #}
+{% endblock %}
+
+{% block content %}
+
 <div class="property-detail">
-    {% if propiedad.imagen %}
-    <img src="{{ propiedad.imagen.url }}" alt="{{ propiedad.titulo }}" class="property-detail-image"> {% else %}
-    <img src="{% static 'propiedades/default_property.png' %}" alt="Sin imagen" class="property-detail-image"> {% endif %}
+
+    {% if propiedad.imagen_principal %}
+        <img src="{{ propiedad.imagen_principal.url }}" alt="{{ propiedad.titulo }}" class="property-detail-image">
+    {% else %}
+        <img src="{% static 'propiedades/default_property.png' %}" alt="Sin imagen" class="property-detail-image">
+    {% endif %}
 
     <h1>{{ propiedad.titulo }}</h1>
     <p>{{ propiedad.descripcion }}</p>
 
+    {# Bloque de Reseña y Calificación IA #}
+    {% if propiedad.ia_reseña_generada %}
+    <div class="ia-review-section">
+        <h2><i class="fa-solid fa-robot"></i> Reseña Generada por IA</h2>
+        <p class="ia-review-text">{{ propiedad.ia_reseña_generada }}</p>
+        {% if propiedad.ia_calificacion %}
+        <div class="ia-rating">
+            <strong>Calificación IA:</strong>
+            {% for _ in "12345" %} {# Iterar sobre una cadena simple y corta es lo más directo. #}
+                {% if forloop.counter <= propiedad.ia_calificacion %}
+                    <i class="fa-solid fa-star gold"></i> {# Estrella llena #}
+                {% else %}
+                    <i class="fa-regular fa-star light-grey"></i> {# Estrella vacía #}
+                {% endif %}
+            {% endfor %}
+            <span class="rating-number">({{ propiedad.ia_calificacion }}/5)</span>
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
+    {# Fin Bloque de Reseña y Calificación IA #}
+
     <div class="info-grid">
-        <div class="info-item"><i class="fa-solid fa-tag"></i> <strong>Tipo:</strong> {{ propiedad.get_tipo_propiedad_display }}</div>
-        <div class="info-item"><i class="fa-solid fa-dollar-sign"></i> <strong>Precio:</strong> ${{ propiedad.precio|floatformat:2 }}</div>
-        <div class="info-item"><i class="fa-solid fa-bed"></i> <strong>Habitaciones:</strong> {{ propiedad.num_habitaciones }}</div>
-        <div class="info-item"><i class="fa-solid fa-bath"></i> <strong>Baños:</strong> {{ propiedad.num_banos }}</div>
-        <div class="info-item"><i class="fa-solid fa-maximize"></i> <strong>Superficie:</strong> {{ propiedad.superficie }} m²</div>
-        <div class="info-item"><i class="fa-solid fa-location-dot"></i> <strong>Ubicación:</strong> {{ propiedad.direccion }}, {{ propiedad.ciudad }}, {{ propiedad.region }}</div>
-        <div class="info-item"><i class="fa-solid fa-user-circle"></i> <strong>Publicado por:</strong> {{ propiedad.propietario.username }}</div>
-        <div class="info-item"><i class="fa-solid fa-calendar-alt"></i> <strong>Publicado el:</strong> {{ propiedad.fecha_publicacion|date:"d M, Y" }}</div>
-        <div class="info-item"><i class="fa-solid fa-check-circle"></i> <strong>Estado:</strong> {% if propiedad.disponible %}Disponible{% else %}No Disponible{% endif %}</div>
+
+        <div class="info-item">
+            <i class="fa-solid fa-tag"></i> <strong>Tipo:</strong> {{ propiedad.get_tipo_propiedad_display }}
+        </div>
+
+        <div class="info-item">
+            <i class="fa-solid fa-dollar-sign"></i> <strong>Precio:</strong> ${{ propiedad.precio|floatformat:2 }}
+        </div>
+
+        <div class="info-item">
+            <i class="fa-solid fa-bed"></i> <strong>Habitaciones:</strong> {{ propiedad.num_habitaciones }}
+        </div>
+
+        <div class="info-item">
+            <i class="fa-solid fa-bath"></i> <strong>Baños:</strong> {{ propiedad.num_banos }}
+        </div>
+
+        <div class="info-item">
+            <i class="fa-solid fa-maximize"></i> <strong>Superficie:</strong>
+            {% if propiedad.metros_cuadrados %}
+                {{ propiedad.metros_cuadrados|floatformat:2 }} m²
+            {% else %}
+                N/A
+            {% endif %}
+        </div>
+
+        <div class="info-item">
+            <i class="fa-solid fa-location-dot"></i> <strong>Ubicación:</strong>
+            {{ propiedad.direccion }}, {{ propiedad.ciudad }}, {{ propiedad.pais }}
+        </div>
+
+        <div class="info-item">
+            <i class="fa-solid fa-user-circle"></i> <strong>Publicado por:</strong> {{ propiedad.propietario.username }}
+        </div>
+
+        <div class="info-item">
+            <i class="fa-solid fa-calendar-alt"></i> <strong>Publicado el:</strong> {{ propiedad.fecha_publicacion|date:"d M, Y" }}
+        </div>
+
+        <div class="info-item">
+            <i class="fa-solid fa-check-circle"></i> <strong>Estado:</strong>
+            {% if propiedad.disponible %}
+                Disponible
+            {% else %}
+                No Disponible
+            {% endif %}
+        </div>
+
+        <div class="info-item">
+            <i class="fa-solid fa-car"></i> <strong>Garaje:</strong>
+            {% if propiedad.tiene_garaje %}
+                Sí
+            {% else %}
+                No
+            {% endif %}
+        </div>
+
+        {% if propiedad.caracteristicas_adicionales %}
+            <div class="info-item">
+                <i class="fa-solid fa-star"></i> <strong>Características:</strong> {{ propiedad.caracteristicas_adicionales }}
+            </div>
+        {% endif %}
+
     </div>
 
     {% if user.is_authenticated and user == propiedad.propietario %}
-    <div class="property-actions">
-        <a href="{% url 'editar_propiedad_frontend' propiedad.pk %}" class="btn-dashboard edit-btn">Editar Propiedad</a>
-        <a href="{% url 'eliminar_propiedad_frontend' propiedad.pk %}" class="btn-dashboard delete-btn">Eliminar Propiedad</a>
-    </div>
+        <div class="property-actions">
+            <a href="{% url 'editar_propiedad_frontend' propiedad.pk %}" class="btn-dashboard edit-btn">Editar Propiedad</a>
+            <form method="post" action="{% url 'eliminar_propiedad_frontend' propiedad.pk %}" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn-dashboard delete-btn" onclick="return confirm('¿Estás seguro de que quieres eliminar esta propiedad?');">Eliminar Propiedad</button>
+            </form>
+        </div>
+
+    {% elif user.is_authenticated %}
+        <div class="contact-owner-section">
+            <h2>Contactar al Propietario</h2>
+            <p>Puedes contactar a {{ propiedad.propietario.username }} para más información:</p>
+            <p><strong>Correo Electrónico:</strong> <a href="mailto:{{ propiedad.propietario.email }}">{{ propiedad.propietario.email }}</a></p>
+        </div>
+
+    {% else %}
+        <div class="contact-owner-section">
+            <h2>Interesado en esta Propiedad?</h2>
+            <p>Para contactar al propietario y obtener más detalles, por favor <a href="{% url 'login' %}">inicia sesión</a> o <a href="{% url 'signup' %}">regístrate</a>.</p>
+        </div>
     {% endif %}
+
 </div>
+
 {% endblock content %}
+
+{% block extra_js %}
+{# Puedes añadir JS específico aquí si es necesario para futuras interacciones con la reseña de IA #}
+{% endblock extra_js %}

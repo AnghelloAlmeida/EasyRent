@@ -1,0 +1,270 @@
+/* propiedades/static/admin/css/admin.css */
+
+/* --- General Body and Container Styles for Admin --- */
+body#django-admin {
+    font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    background-color: #f8f9fa; /* Fondo más suave, similar al de usuario */
+    color: #343a40;
+    line-height: 1.6;
+}
+
+#container {
+    max-width: 1200px; /* Ancho máximo similar al main-container de usuarios */
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Sombra similar */
+    min-height: 80vh; /* Asegura un buen alto */
+    box-sizing: border-box;
+}
+
+/* --- Header Styles for Admin --- */
+#header {
+    background-color: #28a745; /* Verde vibrante de tu marca */
+    color: white;
+    padding: 10px 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px 8px 0 0; /* Bordes redondeados en la parte superior */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+#header:hover {
+    background-color: #218838; /* Efecto hover */
+}
+
+#branding h1 {
+    color: white;
+    font-size: 1.8em;
+    margin: 0;
+    font-weight: bold;
+    text-align: left;
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+#branding h1 a {
+    color: white;
+    text-decoration: none;
+}
+
+#branding h1 a:hover {
+    transform: scale(1.02);
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+/* User tools in header (View site, Change password, Log out) */
+#user-tools {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+#user-tools a,
+#user-tools strong {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 5px 8px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease-in-out, transform 0.2s ease;
+    white-space: nowrap;
+}
+
+#user-tools a:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-1px);
+}
+
+/* --- Module Titles (Authentication and Authorization, Properties) --- */
+div.module h2,
+div.module caption {
+    background-color: #f0f2f5; /* Fondo más claro para los títulos de módulos */
+    color: #343a40;
+    font-size: 1.3em;
+    padding: 15px 20px;
+    border-bottom: 1px solid #e0e0e0;
+    border-top: 1px solid #e0e0e0;
+    margin: 0;
+    text-align: left;
+    border-radius: 8px 8px 0 0; /* Solo arriba para el primer módulo */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: background-color 0.3s ease-in-out;
+}
+
+/* Module Cards/Boxes in Django Admin */
+div.module {
+    background-color: #ffffff;
+    border: 1px solid #e9ecef;
+    border-radius: 10px; /* Bordes redondeados para los módulos */
+    margin-bottom: 25px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+div.module:hover {
+    transform: translateY(-3px); /* Ligero levantamiento al pasar el cursor */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* Table Rows (Models: Groups, Users, Properties) */
+div.module table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+div.module th,
+div.module td {
+    padding: 12px 20px;
+    border-bottom: 1px solid #f0f0f0; /* Líneas divisorias más suaves */
+    text-align: left;
+}
+
+div.module th {
+    background-color: #fcfcfc;
+    font-weight: 600;
+    color: #555;
+}
+
+div.module tr:last-child td {
+    border-bottom: none;
+}
+
+div.module tr:nth-child(even) {
+    background-color: #f9f9f9; /* Raya las filas para mejor legibilidad */
+}
+
+/* Add/Change Links in Admin */
+div.module a {
+    color: #28a745; /* Verde para los links de añadir/modificar */
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease-in-out, text-decoration 0.3s ease-in-out;
+}
+
+div.module a:hover {
+    color: #218838;
+    text-decoration: underline;
+}
+
+/* Action Buttons (Add, Change, etc.) */
+.addlink, .changelink {
+    font-size: 0.9em;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: #28a745;
+    color: white !important; /* !important para sobrescribir los estilos base de Django */
+    transition: background-color 0.3s ease-in-out, transform 0.2s ease, box-shadow 0.3s ease-in-out;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.addlink:hover, .changelink:hover {
+    background-color: #218838;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    text-decoration: none;
+}
+
+/* Recent Actions Section */
+.actionlist {
+    list-style: none;
+    padding: 0;
+}
+
+.actionlist li {
+    padding: 8px 0;
+    border-bottom: 1px dashed #eee;
+    font-size: 0.95em;
+    color: #555;
+}
+
+.actionlist li:last-child {
+    border-bottom: none;
+}
+
+.actionlist li a {
+    color: #007bff; /* Azul para acciones, similar a enlaces */
+    text-decoration: none;
+    transition: color 0.3s ease-in-out, text-decoration 0.3s ease-in-out;
+}
+
+.actionlist li a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+/* Delete Icon (X) */
+.deletelink {
+    color: #dc3545 !important;
+    font-weight: bold;
+    transition: color 0.3s ease-in-out, transform 0.2s ease;
+}
+
+.deletelink:hover {
+    color: #c82333 !important;
+    transform: scale(1.1);
+    text-decoration: none;
+}
+
+/* Admin Footer */
+#footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: 30px;
+    color: #777;
+    font-size: 0.9em;
+    border-top: 1px solid #e0e0e0;
+    background-color: #fcfcfc;
+    border-radius: 0 0 10px 10px;
+}
+
+/* Media Queries for Admin Responsiveness (basic) */
+@media (max-width: 768px) {
+    #container {
+        margin: 10px;
+        padding: 15px;
+    }
+
+    #header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 15px;
+    }
+
+    #branding h1 {
+        font-size: 1.5em;
+        margin-bottom: 10px;
+    }
+
+    #user-tools {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    #user-tools a,
+    #user-tools strong {
+        width: 100%;
+        text-align: left;
+    }
+
+    div.module h2,
+    div.module caption {
+        font-size: 1.1em;
+        padding: 12px 15px;
+    }
+
+    div.module th,
+    div.module td {
+        padding: 10px 15px;
+        font-size: 0.9em;
+    }
+
+    .addlink, .changelink {
+        padding: 4px 8px;
+        font-size: 0.8em;
+    }
+}

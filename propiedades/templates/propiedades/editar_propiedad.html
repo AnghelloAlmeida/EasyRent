@@ -1,9 +1,26 @@
-{# propiedades/templates/propiedades/editar_propiedad.html #} {% extends 'propiedades/base.html' %} {% block title %}Editar {{ propiedad.titulo }} - EasyRent{% endblock %} {% block content %}
+{# propiedades/templates/propiedades/editar_propiedad.html #}
+
+{% extends 'propiedades/base.html' %}
+
+{% block title %}
+    Editar {{ propiedad.titulo }} - EasyRent
+{% endblock %}
+
+{% block content %}
+
 <div class="form-container">
+
     <h1>Editar Propiedad: {{ propiedad.titulo }}</h1>
+
     <form method="post" enctype="multipart/form-data">
-        {% csrf_token %} {{ form.as_p }}
+
+        {% csrf_token %}
+        {{ form.as_p }}
+
         <button type="submit">Guardar Cambios</button>
+
     </form>
+
 </div>
+
 {% endblock content %}

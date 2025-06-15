@@ -1,0 +1,55 @@
+/* easyrent_demo/static/admin/css/my_jazzmin_theme.css */
+
+/* Reglas para asegurar que el logo predeterminado de Jazzmin desaparezca en el login */
+.login-box .login-logo {
+    display: none !important; /* Fuerza la ocultación del div que contiene el logo "A" */
+    visibility: hidden !important; /* Otra capa de seguridad para ocultar */
+    height: 0 !important; /* Elimina su espacio */
+    width: 0 !important;
+    overflow: hidden !important;
+    margin: 0 !important; /* Elimina márgenes */
+    padding: 0 !important; /* Elimina paddings */
+}
+
+/* Estiliza el texto "Bienvenido al panel de administración de EasyRent" */
+/* Este es el texto que usaremos como el "logo" de EasyRent */
+.login-box .login-box-msg {
+    font-size: 2.8em !important; /* Haz el texto mucho más grande para que destaque */
+    font-weight: bold !important; /* Negrita */
+    color: #28a745 !important; /* Tu color verde principal */
+    margin-top: 30px !important; /* Un poco de margen superior */
+    margin-bottom: 25px !important; /* Un poco de margen inferior */
+    text-align: center !important; /* Centrar texto */
+    text-shadow: none !important; /* Elimina cualquier sombra de texto */
+    line-height: 1.2 !important; /* Ajusta la altura de línea si es necesario */
+}
+
+/* Estilos opcionales para el fondo y la tarjeta de login */
+body.login-page {
+    background-color: #e0f2f7 !important; /* Fondo suave para el login */
+}
+
+.card.card-outline.card-primary {
+    border-top: 5px solid #28a745 !important; /* Borde superior verde en la tarjeta de login */
+}
+
+/* Asegúrate de que los enlaces dentro del login-box-msg también hereden el color si fuera un enlace */
+.login-box .login-box-msg a {
+    color: #28a745 !important;
+}
+
+/* Otras reglas que ya tenías para la interfaz de Jazzmin */
+.main-header .navbar-success {
+    background-color: #28a745 !important;
+    color: white !important;
+}
+
+.main-sidebar .brand-link .brand-text {
+    color: #28a745 !important;
+}
+
+.nav-sidebar .nav-item > .nav-link.active,
+.nav-sidebar .nav-item > .nav-link.active i {
+    background-color: #28a745 !important;
+    color: white !important;
+}

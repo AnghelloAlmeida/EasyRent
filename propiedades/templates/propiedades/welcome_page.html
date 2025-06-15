@@ -1,4 +1,5 @@
-{# propiedades/templates/propiedades/welcome_page.html #} {% load static %}
+{# propiedades/templates/propiedades/welcome_page.html #}
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 
@@ -7,11 +8,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bienvenido a EasyRent</title>
     {# Carga tu CSS personalizado #}
-    <link rel="stylesheet" href="{% static 'propiedades/styles.css' %}"> {# Carga Font Awesome para los iconos #}
+    <link rel="stylesheet" href="{% static 'propiedades/styles.css' %}">
+    {# Carga Font Awesome para los iconos #}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         /* Estilos específicos para la página de bienvenida si quieres que el fondo sea diferente */
-        
+
         body {
             background-color: #e0f2f7;
             /* Un color de fondo suave para la bienvenida */
@@ -24,7 +26,7 @@
             box-sizing: border-box;
         }
         /* ... (mantén el resto de tus estilos aquí, como .welcome-container, .welcome-card, etc.) ... */
-        
+
         .welcome-card {
             background-color: #ffffff;
             padding: 50px;
@@ -36,26 +38,26 @@
             margin: auto;
             /* Para centrar la tarjeta */
         }
-        
+
         .welcome-card h1 {
             color: #28a745;
             margin-bottom: 25px;
             font-size: 3em;
         }
-        
+
         .welcome-card p {
             color: #555;
             margin-bottom: 35px;
             font-size: 1.2em;
         }
-        
+
         .welcome-options {
             display: flex;
             justify-content: center;
             gap: 30px;
             margin-bottom: 40px;
         }
-        
+
         .btn-welcome {
             background-color: #28a745;
             color: white;
@@ -71,24 +73,24 @@
             transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
-        
+
         .btn-welcome i {
             font-size: 2.5em;
         }
-        
+
         .btn-welcome:hover {
             background-color: #218838;
             transform: translateY(-5px);
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
         }
-        
+
         .welcome-text {
             font-style: italic;
             color: #777;
             margin-top: 35px;
             font-size: 1em;
         }
-        
+
         .welcome-illustration img {
             max-width: 80%;
             height: auto;
@@ -97,7 +99,7 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
         /* Media Queries para Responsive */
-        
+
         @media (max-width: 768px) {
             .welcome-card {
                 padding: 30px;
@@ -143,7 +145,8 @@
             </div>
             <p class="welcome-text">Explora Propiedades. Tu Espacio Ideal, Sin Complicaciones. EasyRent</p>
             <div class="welcome-illustration">
-                <img src="{% static 'propiedades/illustration.png' %}" alt="Ilustración de EasyRent">
+                {# AQUÍ ESTÁ LA CORRECCIÓN #}
+                <img src="{% static 'propiedades/pexels-photo-3558815.webp' %}" alt="Ilustración de EasyRent">
             </div>
         </div>
     </div>

@@ -1,0 +1,46 @@
+/* easyrent_demo/static/admin/css/my_jazzmin_theme.css */
+
+/* Oculta la "A" del logo de Jazzmin en la página de login*/
+body.login-page .login-box .login-logo {
+    display: none;
+}
+
+/* Estiliza el texto "Bienvenido al panel de administración de EasyRent" */
+/* para que actúe como tu título principal */
+body.login-page .login-box-msg {
+    font-size: 2.2em;      /* Haz el texto más grande */
+    font-weight: bold;     /* Negrita */
+    color: #28a745;        /* Tu color verde principal */
+    margin-bottom: 20px;   /* Espacio debajo */
+    text-align: center;    /* Centrar texto */
+    text-shadow: none;     /* Elimina cualquier sombra de texto que Jazzmin pudiera aplicar */
+}
+
+/* Opcional: Si quieres un fondo específico para la página de login */
+body.login-page {
+    background-color: #e0f2f7; /* Un fondo suave para el login */
+}
+
+/* Ajustes de color para el borde superior de la tarjeta de login */
+.card-primary.card-outline {
+    border-top-color: #28a745 !important; /* Borde superior verde */
+}
+
+/* Puedes añadir aquí más estilos personalizados para otras partes del admin */
+/* Por ejemplo, para el encabezado principal de Jazzmin (no el login) */
+.main-header .navbar-success {
+    background-color: #28a745 !important; /* Navbar verde */
+    color: white !important;
+}
+
+/* Color del texto del brand (sitio en el sidebar) */
+.main-sidebar .brand-link .brand-text {
+    color: #28a745 !important;
+}
+
+/* Iconos y texto del sidebar */
+.nav-sidebar .nav-item > .nav-link.active,
+.nav-sidebar .nav-item > .nav-link.active i {
+    background-color: #28a745 !important;
+    color: white !important;
+}

@@ -1,7 +1,15 @@
-{# propiedades/templates/propiedades/user_dashboard.html #} {% extends 'propiedades/base.html' %} {% load static %} {% block title %}Mi Menú Principal - EasyRent{% endblock %} {% block content %}
+{# propiedades/templates/propiedades/user_dashboard.html #}
+
+{% extends 'propiedades/base.html' %}
+
+{% load static %}
+
+{% block title %}Mi Menú Principal - EasyRent{% endblock %}
+
+{% block content %}
 <div class="dashboard-container">
     <div class="dashboard-header">
-        <h1>¡Hola, {{ user.username }}!</h1>
+        <h1>¡Hola, {{ user.first_name|default:user.username }}!</h1> {# Muestra el nombre si existe, sino el username #}
         <p>Bienvenido a tu panel de control principal de EasyRent.</p>
     </div>
 
@@ -23,6 +31,8 @@
             <p>Encuentra tu próximo hogar o inversión.</p>
             <a href="{% url 'lista_propiedades_frontend' %}" class="btn-dashboard">Buscar Propiedades</a>
         </div>
+
+        {# El widget "Editar Perfil" ha sido movido a la barra de navegación, por lo que se elimina de aquí #}
     </div>
 </div>
 {% endblock content %}

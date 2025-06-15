@@ -1,0 +1,32 @@
+{# propiedades/templates/propiedades/_propiedades_list_partial.html #}
+{% load static %} {# <-- ESTA ES LA POSICIÓN CORRECTA SI SE INCLUYE DIRECTAMENTE Y USA STATIC FILES #}
+
+{% for propiedad in propiedades %}
+<div class="property-card">
+    {# CORRECCIÓN: 'imagen' a 'imagen_principal' #}
+    {% if propiedad.imagen_principal %}
+    <img src="{{ propiedad.imagen_principal.url }}" alt="{{ propiedad.titulo }}" class="property-image">
+    {% else %}
+    <img src="{% static 'propiedades/default_property.png' %}" alt="Sin imagen" class="property-image">
+    {% endif %}
+    <h3>{{ propiedad.titulo }}</h3>
+    <p><strong>Ubicación:</strong> {{ propiedad.ciudad }}</p>
+    <p><strong>Precio:</strong> ${{ propiedad.precio|floatformat:0 }}</p>
+    <p><strong>Habitaciones:</strong> {{ propiedad.num_habitaciones }}</p>
+    <p><strong>Baños:</strong> {{ propiedad.num_banos }}</p>
+    {% if propiedad.metros_cuadrados %}
+    <p><strong>Metros Cuadrados:</strong> {{ propiedad.metros_cuadrados|floatformat:0 }} m²</p>
+    {% endif %}
+    <p><strong>Garaje:</strong> {% if propiedad.tiene_garaje %}Sí{% else %}No{% endif %}</p>
+    {% if propiedad.caracteristicas_adicionales %}
+    <p><strong>Características:</strong> {{ propiedad.caracteristicas_adicionales }}</p>
+    {% endif %}
+    <a href="{% url 'detalle_propiedad_frontend' propiedad.pk %}" class="btn-details property-list-detail-btn">Ver Detalles</a>
+</div>
+{% empty %}
+    {# ESTE ES EL BLOQUE QUE SE MUESTRA CUANDO LA LISTA 'propiedades' ESTÁ VACÍA #}
+    <div class="no-properties-found-message">
+        <p>No se encontraron propiedades que coincidan con los filtros aplicados.</p>
+        <p>Intenta ajustar tus criterios de búsqueda o <a href="{% url 'lista_propiedades_frontend' %}">limpiar los filtros</a>.</p>
+    </div>
+{% endfor %}

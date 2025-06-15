@@ -1,0 +1,166 @@
+{# propiedades/templates/propiedades/estimar_precio.html #}
+{% extends 'propiedades/base.html' %}
+{% load static %}
+
+{% block title %}Estimar Precio - EasyRent{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h1>Estimar Precio de Propiedad</h1>
+    <p>Ingresa las características de la propiedad para obtener un precio estimado.</p>
+
+    <form id="priceEstimateForm" method="post">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="id_tipo_propiedad">Tipo de Propiedad:</label>
+            <select id="id_tipo_propiedad" name="tipo_propiedad" class="form-control" required>
+                <option value="">Selecciona un tipo</option>
+                {% for tp_val, tp_label in tipos_propiedad_choices %}
+                <option value="{{ tp_val }}">{{ tp_label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="id_ciudad">Ciudad:</label>
+            <select id="id_ciudad" name="ciudad" class="form-control" required>
+                <option value="">Selecciona una ciudad</option>
+                {% for c in ciudades_disponibles %}
+                <option value="{{ c }}">{{ c }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="id_metros_cuadrados">Metros Cuadrados (m²):</label>
+            <input type="number" id="id_metros_cuadrados" name="metros_cuadrados" class="form-control" step="0.01" min="1" required>
+        </div>
+
+        <div class="form-group">
+            <label for="id_num_habitaciones">Número de Habitaciones:</label>
+            <input type="number" id="id_num_habitaciones" name="num_habitaciones" class="form-control" min="0" required>
+        </div>
+
+        <div class="form-group">
+            <label for="id_num_banos">Número de Baños:</label>
+            <input type="number" id="id_num_banos" name="num_banos" class="form-control" min="0" required>
+        </div>
+
+        <div class="form-group form-check">
+            <input type="checkbox" id="id_tiene_garaje" name="tiene_garaje" class="form-check-input">
+            <label class="form-check-label" for="id_tiene_garaje">¿Tiene Garaje?</label>
+        </div>
+
+        <div class="form-group">
+            <label for="id_caracteristicas_adicionales">Características Adicionales (separadas por comas, ej: piscina, jardín):</label>
+            <textarea id="id_caracteristicas_adicionales" name="caracteristicas_adicionales" class="form-control" rows="3" placeholder="Ej: Piscina, Jardín, Balcón, Seguridad 24/7"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Obtener Estimación</button>
+    </form>
+
+    <div id="estimationResult" class="estimation-result" style="display: none;">
+        <h2>Precio Estimado:</h2>
+        <p class="estimated-price">Cargando...</p>
+    </div>
+
+    <div id="errorMessage" class="error-message" style="display: none;">
+        <p></p>
+    </div>
+
+</div>
+
+{% endblock content %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('priceEstimateForm');
+        const estimationResultDiv = document.getElementById('estimationResult');
+        const estimatedPriceP = estimationResultDiv.querySelector('.estimated-price');
+        const errorMessageDiv = document.getElementById('errorMessage');
+        const errorMessageP = errorMessageDiv.querySelector('p');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevenir el envío normal del formulario
+
+            estimationResultDiv.style.display = 'none'; // Ocultar resultado anterior
+            errorMessageDiv.style.display = 'none'; // Ocultar errores anteriores
+            estimatedPriceP.textContent = 'Cargando...'; // Mostrar mensaje de carga
+
+            const formData = new FormData(form);
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+            fetch('{% url "estimar_precio_propiedad" %}', {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': csrfToken,
+                    'Accept': 'application/json',
+                    // 'Content-Type': 'application/json', // FormData maneja su propio Content-Type
+                },
+                body: formData
+            })
+            .then(response => {
+                // Verificar si la respuesta es JSON antes de intentar parsearla
+                const contentType = response.headers.get('content-type');
+                if (contentType && contentType.indexOf('application/json') !== -1) {
+                    return response.json();
+                } else {
+                    // Si no es JSON, asumir error del servidor y lanzar un error
+                    return response.text().then(text => {
+                        throw new Error(`Respuesta no JSON del servidor: ${response.status} - ${text}`);
+                    });
+                }
+            })
+            .then(data => {
+                if (data.error) {
+                    errorMessageP.textContent = 'Error: ' + data.error;
+                    errorMessageDiv.style.display = 'block';
+                    estimationResultDiv.style.display = 'none';
+                } else {
+                    estimatedPriceP.textContent = '$' + parseFloat(data.estimated_price).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    estimationResultDiv.style.display = 'block';
+                    errorMessageDiv.style.display = 'none';
+                }
+            })
+            .catch(error => {
+                console.error('Error al obtener la estimación:', error);
+                errorMessageP.textContent = 'Hubo un problema al conectar con el servidor. Inténtalo de nuevo.';
+                errorMessageDiv.style.display = 'block';
+                estimationResultDiv.style.display = 'none';
+            });
+        });
+    });
+</script>
+
+<style>
+    /* Estilos específicos para la sección de resultados y errores de estimación */
+    .estimation-result, .error-message {
+        margin-top: 30px;
+        padding: 20px;
+        border-radius: 8px;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .estimation-result {
+        background-color: #e6ffe6; /* Verde claro */
+        border: 1px solid #c2f0c2;
+        color: #1e8e3e;
+    }
+
+    .estimation-result .estimated-price {
+        font-size: 2.2em;
+        color: #28a745;
+        margin-top: 10px;
+        margin-bottom: 0;
+    }
+
+    .error-message {
+        background-color: #ffe6e6; /* Rojo claro */
+        border: 1px solid #f0c2c2;
+        color: #dc3545;
+    }
+</style>
+{% endblock extra_js %}

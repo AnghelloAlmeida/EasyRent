@@ -1,25 +1,22 @@
+# propiedades/urls.py
+
 from django.urls import path
 from . import views
-from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-    # URLs públicas
     path('', views.welcome_page, name='welcome_page'),
-    path('propiedades/', views.lista_propiedades_frontend, name='lista_propiedades_frontend'),
-    path('propiedades/<int:pk>/', views.detalle_propiedad_frontend, name='detalle_propiedad_frontend'),
-
-    # NUEVA URL PARA EL DASHBOARD DEL USUARIO
-    path('dashboard/', views.user_dashboard_view, name='user_dashboard'),
-
-    # URLs de autenticación
-    path('register/', views.SignUpView.as_view(), name='register'), # <-- Esta es la URL que tu error buscaba
-    # Modificamos LoginView para redirigir al dashboard después del login
-    path('login/', auth_views.LoginView.as_view(template_name='registration/login.html', next_page='user_dashboard'), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(next_page='welcome_page'), name='logout'),
-
-    # URLs para usuarios autenticados
+    path('lista/', views.lista_propiedades_frontend, name='lista_propiedades_frontend'),
+    path('lista/ajax/', views.lista_propiedades_ajax, name='lista_propiedades_ajax'),
+    path('detalle/<int:pk>/', views.detalle_propiedad_frontend, name='detalle_propiedad_frontend'),
     path('mis-propiedades/', views.mis_propiedades_frontend, name='mis_propiedades_frontend'),
-    path('agregar-propiedad/', views.agregar_propiedad_frontend, name='agregar_propiedad_frontend'),
-    path('propiedades/<int:pk>/editar/', views.editar_propiedad_frontend, name='editar_propiedad_frontend'),
-    path('propiedades/<int:pk>/eliminar/', views.eliminar_propiedad_frontend, name='eliminar_propiedad_frontend'),
+    path('agregar/', views.agregar_propiedad_frontend, name='agregar_propiedad_frontend'),
+    path('editar/<int:pk>/', views.editar_propiedad_frontend, name='editar_propiedad_frontend'),
+    path('eliminar/<int:pk>/', views.eliminar_propiedad_frontend, name='eliminar_propiedad_frontend'),
+    path('signup/', views.SignUpView.as_view(), name='signup'),
+    path('dashboard/', views.user_dashboard_view, name='user_dashboard'),
+    path('edit-profile/', views.edit_profile, name='edit_profile'),
+
+    # --- NUEVA URL PARA LA ESTIMACIÓN DE PRECIOS ---
+    path('estimar-precio/', views.estimar_precio_propiedad, name='estimar_precio_propiedad'),
+    # -----------------------------------------------
 ]

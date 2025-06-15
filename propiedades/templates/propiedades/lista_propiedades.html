@@ -1,66 +1,127 @@
-{# propiedades/templates/propiedades/lista_propiedades.html #} {% extends 'propiedades/base.html' %} {% load static %} {% load custom_tags %} {% block title %}Lista de Propiedades - EasyRent{% endblock %} {% block content %}
-<h1>Propiedades Disponibles</h1>
+{# propiedades/templates/propiedades/lista_propiedades.html #}
+{% extends 'propiedades/base.html' %}
+{% load static %} {# <-- ESTA ES LA POSICIÓN CORRECTA #}
 
-{# Formulario de Búsqueda y Filtrado Avanzado #}
-<form method="get" class="filter-form">
-    <div class="filter-group">
-        <label for="q">Buscar:</label>
-        <input type="text" id="q" name="q" placeholder="Título, descripción, dirección..." value="{{ current_query }}">
-    </div>
+{% block title %}Lista de Propiedades - EasyRent{% endblock %}
 
-    <div class="filter-group">
-        <label for="ciudad">Ciudad:</label>
-        <select id="ciudad" name="ciudad">
+{% block extra_head %}
+    <link rel="stylesheet" href="{% static 'propiedades/styles.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="main-container">
+    <h1>Propiedades Disponibles</h1>
+
+    {# Asume que messages.html está en easyrent_demo/templates/messages.html #}
+    {% include 'messages.html' %}
+
+    {# Formulario de filtros #}
+    <form method="get" class="filter-form" id="filterForm">
+        <div class="filter-group">
+            <label for="id_buscar">Buscar:</label>
+            <input type="text" id="id_buscar" name="buscar" value="{{ current_query }}"
+                placeholder="Título, descripción, dirección">
+        </div>
+        <div class="filter-group">
+            <label for="id_ciudad">Ciudad:</label>
+            <select id="id_ciudad" name="ciudad">
                 <option value="">Todas las ciudades</option>
                 {% for c in ciudades_disponibles %}
-                    <option value="{{ c }}" {% if c == current_ciudad %}selected{% endif %}>{{ c }}</option>
+                <option value="{{ c }}" {% if current_ciudad == c %}selected{% endif %}>{{ c }}</option>
                 {% endfor %}
             </select>
-    </div>
-
-    <div class="filter-group">
-        <label for="tipo_propiedad">Tipo de Propiedad:</label>
-        <select id="tipo_propiedad" name="tipo_propiedad">
+        </div>
+        <div class="filter-group">
+            <label for="id_tipo_propiedad">Tipo de Propiedad:</label>
+            <select id="id_tipo_propiedad" name="tipo_propiedad">
                 <option value="">Todos los tipos</option>
-                {% for key, value in tipos_propiedad_choices %}
-                    <option value="{{ key }}" {% if key == current_tipo_propiedad %}selected{% endif %}>{{ value }}</option>
+                {% for tp_val, tp_label in tipos_propiedad_choices %}
+                <option value="{{ tp_val }}" {% if current_tipo_propiedad == tp_val %}selected{% endif %}>{{ tp_label }}</option>
                 {% endfor %}
             </select>
+        </div>
+        <div class="filter-group">
+            <label for="id_habitaciones">Habitaciones (min.):</label>
+            <input type="number" id="id_habitaciones" name="habitaciones" value="{{ current_min_habitaciones }}" min="1">
+        </div>
+
+        <div class="filter-group">
+            <label for="id_banos">Baños (min.):</label>
+            <input type="number" id="id_banos" name="banos" value="{{ current_min_banos }}" min="0">
+        </div>
+        <div class="filter-group price-range">
+            <label>Metros Cuadrados:</label>
+            <input type="number" step="0.01" name="metros_cuadrados_min" id="id_metros_cuadrados_min" placeholder="Mín m²" value="{{ current_min_metros_cuadrados }}" min="0">
+            <span>-</span>
+            <input type="number" step="0.01" name="metros_cuadrados_max" id="id_metros_cuadrados_max" placeholder="Máx m²" value="{{ current_max_metros_cuadrados }}" min="0">
+        </div>
+        <div class="filter-group">
+            <label for="id_tiene_garaje">Garaje:</label>
+            <select id="id_tiene_garaje" name="tiene_garaje">
+                <option value="">Cualquiera</option>
+                <option value="on" {% if current_tiene_garaje == 'on' %}selected{% endif %}>Sí</option>
+                <option value="off" {% if current_tiene_garaje == 'off' %}selected{% endif %}>No</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label for="id_caracteristicas">Características Adicionales:</label>
+            <input type="text" id="id_caracteristicas" name="caracteristicas" value="{{ current_caracteristicas }}"
+                placeholder="Ej: Piscina, Jardín">
+        </div>
+
+        <div class="filter-group price-range">
+            <label>Precio:</label>
+            <input type="number" name="precio_min" id="id_precio_min" placeholder="Mín" value="{{ current_precio_min }}" min="0">
+            <span>-</span>
+            <input type="number" name="precio_max" id="id_precio_max" placeholder="Máx" value="{{ current_precio_max }}" min="0">
+        </div>
+        <button type="submit" class="btn-filter">Aplicar Filtros</button>
+        <button type="button" id="clearFiltersBtn" class="btn-clear-filters">Limpiar Filtros</button>
+    </form>
+
+
+    <div id="propertyGrid" class="property-grid" style="position: relative;">
+        {# Overlay de carga #}
+        <div class="loading-overlay" id="loadingOverlay">
+            <div class="spinner"></div>
+        </div>
+
+        {# Las propiedades se cargan inicialmente aquí y luego se actualizan con AJAX #}
+        {% include 'propiedades/_propiedades_list_partial.html' %}
     </div>
 
-    <div class="filter-group">
-        <label for="min_habitaciones">Habitaciones (mín.):</label>
-        <input type="number" id="min_habitaciones" name="min_habitaciones" min="0" placeholder="Ej. 2" value="{{ current_min_habitaciones }}">
+    {# Sección de Propiedades Recomendadas (Si las tienes configuradas en tu vista) #}
+    {% if recommended_properties %}
+    <h2 style="text-align: center; margin-top: 60px; margin-bottom: 30px; color: #28a745;">Propiedades Recomendadas para Ti</h2>
+    <div class="property-grid">
+        {% for propiedad in recommended_properties %}
+        <div class="property-card">
+            {# CORRECCIÓN: 'imagen' a 'imagen_principal' #}
+            {% if propiedad.imagen_principal %}
+            <img src="{{ propiedad.imagen_principal.url }}" alt="{{ propiedad.titulo }}" class="property-image">
+            {% else %}
+            <img src="{% static 'propiedades/default_property.png' %}" alt="Sin imagen" class="property-image">
+            {% endif %}
+            <h3>{{ propiedad.titulo }}</h3>
+            <p><strong>Ubicación:</strong> {{ propiedad.ciudad }}</p>
+            <p><strong>Precio:</strong> ${{ propiedad.precio|floatformat:0 }}</p>
+            <p><strong>Habitaciones:</strong> {{ propiedad.num_habitaciones }}</p>
+            <p><strong>Baños:</strong> {{ propiedad.num_banos }}</p>
+            {% if propiedad.metros_cuadrados %}
+            <p><strong>Metros Cuadrados:</strong> {{ propiedad.metros_cuadrados|floatformat:0 }} m²</p>
+            {% endif %}
+            <p><strong>Garaje:</strong> {% if propiedad.tiene_garaje %}Sí{% else %}No{% endif %}</p>
+            {% if propiedad.caracteristicas_adicionales %}
+            <p><strong>Características:</strong> {{ propiedad.caracteristicas_adicionales }}</p>
+            {% endif %}
+            <a href="{% url 'detalle_propiedad_frontend' propiedad.pk %}" class="btn-details property-list-detail-btn">Ver Detalles</a>
+        </div>
+        {% endfor %}
     </div>
+    {% endif %}
 
-    <div class="filter-group price-range">
-        <label>Precio:</label>
-        <input type="number" id="precio_min" name="precio_min" min="0" placeholder="Mínimo" value="{{ current_precio_min }}">
-        <span>-</span>
-        <input type="number" id="precio_max" name="precio_max" min="0" placeholder="Máximo" value="{{ current_precio_max }}">
-    </div>
-
-    <button type="submit" class="btn-filter">Aplicar Filtros</button>
-    <a href="{% url 'lista_propiedades_frontend' %}" class="btn-clear-filters">Limpiar Filtros</a>
-</form>
-
-{% if propiedades %}
-<div class="property-grid">
-    {% for propiedad in propiedades %}
-    <div class="property-card">
-        {% if propiedad.imagen %}
-        <img src="{{ propiedad.imagen.url }}" alt="{{ propiedad.titulo }}" class="property-image"> {% else %}
-        <img src="{% static 'propiedades/default_property.png' %}" alt="Sin imagen" class="property-image"> {% endif %}
-        <h3>{{ propiedad.titulo }}</h3>
-        <p class="property-info-row"><i class="fa-solid fa-location-dot"></i> {{ propiedad.ciudad }}, {{ propiedad.direccion }}</p>
-        <p class="property-info-row"><i class="fa-solid fa-dollar-sign"></i> <strong>Precio:</strong> {{ propiedad.precio|floatformat:2 }}</p>
-        <p class="property-info-row"><i class="fa-solid fa-bed"></i> <strong>Habitaciones:</strong> {{ propiedad.num_habitaciones }}</p>
-        <p class="property-info-row"><i class="fa-solid fa-bath"></i> <strong>Baños:</strong> {{ propiedad.num_banos }}</p>
-        <p class="property-info-row"><i class="fa-solid fa-maximize"></i> <strong>Superficie:</strong> {{ propiedad.superficie }} m²</p>
-        <a href="{% url 'detalle_propiedad_frontend' propiedad.pk %}" class="btn-details">Ver Detalles</a>
-    </div>
-    {% endfor %}
 </div>
-{% else %}
-<p class="no-properties">No se encontraron propiedades que coincidan con los filtros aplicados.</p>
-{% endif %} {% endblock content %}
+
+{# Script JS se cargará aquí al final del body #}
+<script src="{% static 'propiedades/filter_properties.js' %}?v=1.0.1"></script>
+{% endblock content %}

@@ -1,25 +1,27 @@
 {# propiedades/templates/registration/login.html #}
+
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Iniciar Sesión - EasyRent</title>
+
     {# Carga tu CSS personalizado #}
-    <link rel="stylesheet" href="{% static 'propiedades/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'propiedades/styles.css' %}" />
+
     {# Carga Font Awesome para los iconos si son necesarios en este contexto #}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
     <style>
         /* Estilos específicos para la página de login/registro si quieres un fondo diferente */
-
         body {
-            background-color: #e0f2f7;
-            /* Un color de fondo suave, similar al de bienvenida */
+            background-color: #e0f2f7; /* Un color de fondo suave, similar al de bienvenida */
             display: flex;
-            flex-direction: column;
-            /* Asegura que el footer esté abajo */
+            flex-direction: column; /* Asegura que el footer esté abajo */
             justify-content: center;
             align-items: center;
             min-height: 100vh;
@@ -30,8 +32,7 @@
 
         .main-content-wrapper {
             /* Un contenedor para el formulario y mensajes */
-            flex-grow: 1;
-            /* Permite que este contenedor ocupe el espacio restante */
+            flex-grow: 1; /* Permite que este contenedor ocupe el espacio restante */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -39,15 +40,14 @@
         }
 
         .form-container {
-            max-width: 650px;
-            /* Mantén el ancho que ya tenías en styles.css */
-            margin: 0 auto;
-            /* Centra el formulario */
+            max-width: 650px; /* Mantén el ancho que ya tenías en styles.css */
+            margin: 0 auto; /* Centra el formulario */
             padding: 40px;
             background-color: #ffffff;
             border-radius: 12px;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
         }
+
         /* Asegúrate de que los estilos para .messages y .main-footer de styles.css funcionen */
 
         /* Puedes añadir estilos para el nuevo enlace aquí si quieres que se vea diferente */
@@ -56,11 +56,13 @@
             text-align: center; /* Centrar el texto */
             font-size: 0.9em; /* Un poco más pequeño */
         }
+
         .forgot-password-link a {
             color: #007bff; /* Un color de enlace estándar */
             text-decoration: none; /* Sin subrayado por defecto */
             font-weight: bold; /* Un poco más de énfasis */
         }
+
         .forgot-password-link a:hover {
             text-decoration: underline; /* Subrayar al pasar el ratón */
         }
@@ -69,12 +71,13 @@
 
 <body>
     {# No hay header aquí #}
+
     {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-        <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
             {% endfor %}
-    </ul>
+        </ul>
     {% endif %}
 
     <div class="main-content-wrapper">
@@ -86,13 +89,13 @@
                 <button type="submit">Iniciar Sesión</button>
             </form>
 
-            {#  ********** INICIO DE LA SECCIÓN AGREGADA ********** #}
+            {# ********** INICIO DE LA SECCIÓN AGREGADA ********** #}
             <p class="forgot-password-link">
                 ¿Olvidaste tu contraseña? <a href="{% url 'password_reset' %}">Recuperar Contraseña</a>
             </p>
-            {#  ********** FIN DE LA SECCIÓN AGREGADA ********** #}
+            {# ********** FIN DE LA SECCIÓN AGREGADA ********** #}
 
-            <p>¿No tienes una cuenta? <a href="{% url 'register' %}">Regístrate aquí</a></p>
+            <p>¿No tienes una cuenta? <a href="{% url 'signup' %}">Regístrate aquí</a></p> {# ¡LÍNEA MODIFICADA! #}
         </div>
     </div>
 
