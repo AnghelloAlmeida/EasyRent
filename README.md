@@ -47,14 +47,14 @@ El proyecto EasyRent utiliza variables de entorno para almacenar configuraciones
 
 2.  Añade las siguientes variables a tu archivo `.env`, reemplazando los valores de ejemplo con tus propias credenciales y configuraciones:
 
-    ```ini
+    
     SECRET_KEY="tu_clave_secreta_django_aqui_generada_aleatoriamente_por_favor"
     GOOGLE_API_KEY="AIzaSyXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
     EMAIL_HOST_USER="tu.correo.app@gmail.com"
     EMAIL_HOST_PASSWORD="tupassworddeaplicacionde16digitos"
     DEBUG=True
     ALLOWED_HOSTS="127.0.0.1,localhost"
-    ```
+
     Es **IMPRESCINDIBLE** que añadas `/.env` a tu archivo `.gitignore`. Esto previene que tus credenciales sensibles se suban accidentalmente a repositorios públicos.
 
 ### **Pasos de Instalación**
