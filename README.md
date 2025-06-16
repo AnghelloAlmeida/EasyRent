@@ -128,90 +128,85 @@ El proyecto EasyRent utiliza variables de entorno para almacenar configuraciones
 
 ## **Estructura del Proyecto**
 
-- easyrent_demo/ (Carpeta raíz del proyecto Django)
-    - .vscode/: Carpeta de configuración para el editor Visual Studio Code.
-    - __pycache__/: Carpeta generada automáticamente por Python para almacenar archivos compilados de bytes.
-    - .env: Archivo para almacenar variables de entorno sensibles (claves API, contraseñas de DB, etc.). **Importante: ¡Debe estar en `.gitignore`!**
-    - .gitignore: Archivo para especificar qué archivos y carpetas debe ignorar Git (ej., `.env`, `__pycache__`, `venv/`, `media/`).
-    - `db.sqlite3`: Base de datos predeterminada de SQLite para desarrollo. No debe versionarse en producción.
-    - `manage.py`: Utilidad de línea de comandos de Django para interactuar con el proyecto (ej., `runserver`, `makemigrations`, `migrate`, `createsuperuser`).
-    - `requirements.txt`: Lista de todas las dependencias de Python del proyecto (librerías y paquetes).
+easyrent_demo/                  # Carpeta raíz del proyecto Django
+├── .vscode/                    # Configuración para Visual Studio Code
+├── __pycache__/               # Archivos .pyc compilados por Python
+├── .env                       # Variables de entorno sensibles (¡agregar a .gitignore!)
+├── .gitignore                 # Archivos/carpetas ignorados por Git
+├── db.sqlite3                 # Base de datos SQLite (solo desarrollo)
+├── manage.py                  # Utilidad de Django para administración del proyecto
+├── requirements.txt           # Lista de dependencias del proyecto
 
-    - `easyrent_demo/` (Carpeta de configuración principal del proyecto Django)
-        - `__init__.py`: Indica a Python que este directorio es un paquete.
-        - `asgi.py`: Un punto de entrada compatible con ASGI para servidores web asíncronos. (Para despliegue, si se usa).
-        - `settings.py`: Contiene la configuración global del proyecto (base de datos, aplicaciones instaladas, configuraciones de seguridad, claves API generales, etc.).
-        - `urls.py`: Define las URL principales de todo el proyecto, que luego pueden incluir las URLs de cada aplicación.
-        - `wsgi.py`: Un punto de entrada compatible con WSGI para servidores web. (Para despliegue).
+├── easyrent_demo/             # Configuración principal del proyecto
+│   ├── __init__.py
+│   ├── asgi.py                # Entrada para servidores ASGI
+│   ├── settings.py            # Configuración global del proyecto
+│   ├── urls.py                # URLs raíz del proyecto
+│   └── wsgi.py                # Entrada para servidores WSGI
 
-- `propiedades/` (Aplicación Django para la gestión de propiedades)
-    - `__init__.py`: Indica que `propiedades` es un paquete Python.
-    - `admin.py`: Registra los modelos de la aplicación para que sean accesibles y gestionables desde el panel de administración de Django (Django Admin/Jazzmin).
-    - `apps.py`: Contiene la configuración de la aplicación `propiedades`.
-    - `models.py`: Define los modelos de datos para las propiedades, usuarios, reseñas, etc., que se mapean a tablas en la base de datos.
-    - `views.py`: Contiene la lógica de negocio y las vistas que procesan las solicitudes HTTP y devuelven respuestas (HTML, JSON).
-    - `urls.py`: Define las rutas URL específicas para la aplicación `propiedades`.
-    - `tests.py`: Contiene las pruebas unitarias y de integración para las funcionalidades de la aplicación.
-    - `ai_generator.py`: Módulo que integra la lógica de la API de Google Gemini para la generación de reseñas inteligentes.
-    - `price_estimator.py`: Módulo que implementa la lógica de simulación para la estimación de precios de propiedades.
-    - `migrations/` (Carpeta para los archivos de migración de la base de datos)
-        - `__init__.py`: Indica que es un paquete.
-        - `0001_initial.py`: Archivos generados por Django para aplicar cambios al esquema de la base de datos.
-        - `0002_auto_yyyymmdd_xxxx.py`: Ejemplo de migración adicional.
-        - ...otros archivos de migración generados automáticamente...
+├── propiedades/               # Aplicación principal: gestión de propiedades
+│   ├── __init__.py
+│   ├── admin.py               # Registro de modelos para el admin
+│   ├── apps.py                # Configuración de la app
+│   ├── models.py              # Definición de modelos de base de datos
+│   ├── views.py               # Lógica de negocio y vistas
+│   ├── urls.py                # Rutas URL propias de la app
+│   ├── tests.py               # Pruebas unitarias
+│   ├── ai_generator.py        # Integración con Google Gemini API
+│   ├── price_estimator.py     # Simulación de precios de propiedades
+│   └── migrations/            # Migraciones de base de datos
+│       ├── __init__.py
+│       ├── 0001_initial.py
+│       └── 0002_auto_yyyymmdd_xxxx.py
 
-    - `static/` (Carpeta para archivos estáticos específicos de la aplicación `propiedades`)
-        - `propiedades/` (Subcarpeta para evitar conflictos)
-            - `css/`: Contiene archivos CSS específicos para las propiedades (ej., `propiedades.css`, `form_styles.css`).
-            - `js/`: Contiene archivos JavaScript específicos para las propiedades (ej., `propiedades.js`, `map_integrations.js`).
-            - `img/`: Contiene imágenes específicas de la interfaz de propiedades (ej., `placeholder.png`, `icono_mapa.svg`).
+│   ├── static/
+│   │   └── propiedades/
+│   │       ├── css/
+│   │       ├── js/
+│   │       └── img/
 
-    - `templates/` (Carpeta para las plantillas HTML específicas de la aplicación `propiedades`)
-        - `propiedades/` (Subcarpeta para evitar conflictos de nombres con otras apps)
-            - `_propiedades_list_partial.html`: Plantilla parcial para mostrar una lista de propiedades.
-            - `agregar_propiedad.html`: Plantilla para el formulario de creación de nuevas propiedades.
-            - `base.html`: Plantilla base para las páginas de la aplicación `propiedades`.
-            - `detalle_propiedad.html`: Plantilla para mostrar los detalles de una propiedad individual.
-            - `edit_profile.html`: Plantilla para el formulario de edición del perfil de usuario.
-            - `editar_propiedad.html`: Plantilla para el formulario de edición de propiedades existentes.
-            - `eliminar_propiedad.html`: Plantilla para la confirmación de eliminación de una propiedad.
-            - `estimar_precio.html`: Plantilla para la funcionalidad de estimación de precios.
-            - `lista_propiedades.html`: Plantilla para mostrar un listado general de propiedades.
-            - `mis_propiedades.html`: Plantilla para mostrar las propiedades del usuario actual.
-            - `user_dashboard.html`: Plantilla para el panel de control del usuario.
-            - `welcome_page.html`: Plantilla para la página de bienvenida de la aplicación.
+│   └── templates/
+│       └── propiedades/
+│           ├── _propiedades_list_partial.html
+│           ├── agregar_propiedad.html
+│           ├── base.html
+│           ├── detalle_propiedad.html
+│           ├── edit_profile.html
+│           ├── editar_propiedad.html
+│           ├── eliminar_propiedad.html
+│           ├── estimar_precio.html
+│           ├── lista_propiedades.html
+│           ├── mis_propiedades.html
+│           ├── user_dashboard.html
+│           └── welcome_page.html
 
+├── static/                    # Archivos estáticos globales del proyecto
+│   └── easyrent_demo/
+│       ├── css/
+│       ├── js/
+│       ├── img/
+│       └── fonts/             # (opcional)
 
-- `static/` (Carpeta centralizada para archivos estáticos globales del proyecto)
-    - `easyrent_demo/` (Subcarpeta para evitar conflictos y organizar archivos estáticos globales)
-        - `css/`: Contiene archivos CSS globales (ej., `base.css`, `main.css`, `bootstrap_custom.css`).
-        - `js/`: Contiene archivos JavaScript globales (ej., `global.js`, `animations.js`, `jquery.min.js`).
-        - `img/`: Contiene imágenes globales del sitio (ej., `logo.png`, `favicon.ico`, `background.jpg`).
-        - `fonts/`: (Opcional) Carpeta para fuentes personalizadas (ej., `font_awesome.woff2`).
+├── templates/                 # Plantillas HTML globales
+│   └── easyrent_demo/
+│       ├── base.html
+│       └── registration/
+│           ├── login.html
+│           ├── register.html
+│           ├── password_reset_form.html
+│           ├── password_reset_done.html
+│           ├── password_reset_email.html
+│           ├── password_reset_confirm.html
+│           ├── password_reset_complete.html
+│           ├── password_change_form.html
+│           └── password_change_done.html
 
-- `templates/` (Carpeta centralizada para plantillas HTML globales o base del proyecto)
-    - `easyrent_demo/` (Subcarpeta para organizar plantillas base y globales del proyecto)
-        - `base.html`: Plantilla base principal que define la estructura HTML común a todas las páginas (head, body, etc.).
-        - `registration/` (Carpeta para plantillas de autenticación/registro)
-            - `login.html`: Plantilla para el formulario de inicio de sesión.
-            - `register.html`: Plantilla para el formulario de registro de usuarios.
-            - `password_reset_form.html`: Plantilla para el formulario de solicitud de restablecimiento de contraseña.
-            - `password_reset_done.html`: Plantilla de confirmación de envío de email de restablecimiento.
-            - `password_reset_email.html`: Plantilla para el contenido del email de restablecimiento.
-            - `password_reset_confirm.html`: Plantilla para el formulario de confirmación de nueva contraseña.
-            - `password_reset_complete.html`: Plantilla de confirmación de restablecimiento completado.
-            - `password_change_form.html`: Plantilla para el formulario de cambio de contraseña.
-            - `password_change_done.html`: Plantilla de confirmación de cambio de contraseña realizado.
-        - ...otras plantillas HTML comunes o de autenticación/autorización...
+├── media/                     # Archivos subidos por usuarios
+│   ├── propiedades/
+│   ├── avatars/
+│   └── documentos/
 
-- `media/` (Carpeta para archivos subidos por los usuarios, como imágenes de propiedades)
-    - `propiedades/`: Almacena las imágenes específicas de las propiedades subidas por los usuarios (ej., `casa_montana_1.jpg`, `apartamento_ciudad_2.jpeg`).
-    - `avatars/`: Almacena imágenes de perfil o avatares de usuario (ej., `usuario_juan.png`, `avatar_generico.jpg`).
-    - `documentos/`: (Opcional) Almacena documentos subidos relacionados con propiedades o usuarios (ej., `contrato_alquiler.pdf`).
-    - ...otras subcarpetas para tipos específicos de archivos subidos...
-
-- `venv/` (Carpeta del entorno virtual de Python, generada al crear el entorno)
-    - Contiene todas las librerías y dependencias de Python instaladas específicamente para este proyecto. **¡No debe subirse al control de versiones!**
+└── venv/                      # Entorno virtual (¡no versionar!)
 
 ## **Contribuir**
 
