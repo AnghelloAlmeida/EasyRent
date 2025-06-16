@@ -48,7 +48,7 @@ El proyecto EasyRent utiliza variables de entorno para almacenar configuraciones
 2.  Añade las siguientes variables a tu archivo `.env`, reemplazando los valores de ejemplo con tus propias credenciales y configuraciones:
 
     SECRET_KEY="tu_clave_secreta_django_aqui_generada_aleatoriamente_por_favor"
-    GOOGLE_API_KEY="AIzaSyXXXXXXXXXXXXXXXXX"
+    GOOGLE_API_KEY="AIzaSyXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
     EMAIL_HOST_USER="tu.correo.app@gmail.com"
     EMAIL_HOST_PASSWORD="tupassworddeaplicacionde16digitos"
     DEBUG=True
@@ -128,8 +128,8 @@ El proyecto EasyRent utiliza variables de entorno para almacenar configuraciones
 
 ## **Estructura del Proyecto**
 
-- `easyrent_demo/` (Carpeta raíz del proyecto Django)
-    - `.vscode/`: Carpeta de configuración para el editor Visual Studio Code.
+- easyrent_demo/ (Carpeta raíz del proyecto Django)
+    - .vscode/: Carpeta de configuración para el editor Visual Studio Code.
     - `__pycache__/`: Carpeta generada automáticamente por Python para almacenar archivos compilados de bytes.
     - `.env`: Archivo para almacenar variables de entorno sensibles (claves API, contraseñas de DB, etc.). **Importante: ¡Debe estar en `.gitignore`!**
     - `.gitignore`: Archivo para especificar qué archivos y carpetas debe ignorar Git (ej., `.env`, `__pycache__`, `venv/`, `media/`).
