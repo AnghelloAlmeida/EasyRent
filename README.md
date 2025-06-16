@@ -47,14 +47,13 @@ El proyecto EasyRent utiliza variables de entorno para almacenar configuraciones
 
 2.  Añade las siguientes variables a tu archivo `.env`, reemplazando los valores de ejemplo con tus propias credenciales y configuraciones:
 
-    
     SECRET_KEY="tu_clave_secreta_django_aqui_generada_aleatoriamente_por_favor"
     GOOGLE_API_KEY="AIzaSyXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
     EMAIL_HOST_USER="tu.correo.app@gmail.com"
     EMAIL_HOST_PASSWORD="tupassworddeaplicacionde16digitos"
     DEBUG=True
     ALLOWED_HOSTS="127.0.0.1,localhost"
-
+   
     Es **IMPRESCINDIBLE** que añadas `/.env` a tu archivo `.gitignore`. Esto previene que tus credenciales sensibles se suban accidentalmente a repositorios públicos.
 
 ### **Pasos de Instalación**
@@ -62,55 +61,49 @@ El proyecto EasyRent utiliza variables de entorno para almacenar configuraciones
 1.  **Clona el Repositorio**:
     Para comenzar, necesitarás obtener una copia local del código del proyecto. Abre tu terminal o línea de comandos y ejecuta:
 
-    ```bash
     git clone [https://gitlab.com/tu-usuario/easyrent.git](https://gitlab.com/tu-usuario/easyrent.git) # Reemplaza con la URL REAL de tu repositorio
-    ```
 
 2.  **Accede al Directorio del Proyecto**:
     Una vez clonado, navega al directorio raíz del proyecto EasyRent:
 
-    ```bash
     cd easyrent_demo # Asegúrate de que este sea el nombre correcto de tu carpeta raíz
-    ```
+
 
 3.  **Crea y Activa un Entorno Virtual**:
     Un entorno virtual es fundamental para aislar las dependencias del proyecto y evitar conflictos con otras instalaciones de Python.
 
-    ```bash
+
     python -m venv venv
-    ```
+
     Para Windows:
-    ```bash
+
     .\venv\Scripts\activate
-    ```
+
     Para macOS/Linux:
-    ```bash
+
     source venv/bin/activate
-    ```
+
     (Deberías ver `(venv)` al inicio de tu línea de comandos, indicando que el entorno virtual está activo).
 
 4.  **Instala las Dependencias**:
     Con el entorno virtual activado, instala todas las librerías y paquetes necesarios listados en `requirements.txt`:
 
-    ```bash
+
     pip install -r requirements.txt
-    ```
 
 5.  **Aplica las Migraciones de la Base de Datos**:
     Django utiliza migraciones para gestionar los cambios en el esquema de la base de datos.
 
-    ```bash
     python manage.py makemigrations propiedades # Esto puede variar si tu app principal tiene otro nombre
     python manage.py makemigrations # Ejecuta para otras apps si hay cambios pendientes
     python manage.py migrate # Aplica todas las migraciones a la base de datos
-    ```
+    
 
 6.  **Crea un Superusuario (Administrador)**:
     Necesitarás un usuario con privilegios de administrador para acceder al panel de administración de Django.
 
-    ```bash
     python manage.py createsuperuser
-    ```
+    
     Sigue las instrucciones en pantalla para ingresar el nombre de usuario, dirección de correo electrónico y contraseña.
 
 ### **Ejecución del Proyecto**
@@ -118,9 +111,8 @@ El proyecto EasyRent utiliza variables de entorno para almacenar configuraciones
 1.  **Inicia el Servidor de Desarrollo**:
     Finalmente, inicia el servidor de desarrollo de Django:
 
-    ```bash
     python manage.py runserver
-    ```
+
     Si todo se configuró correctamente, verás un mensaje en la terminal indicando que el servidor está escuchando en `http://127.0.0.1:8000/`.
 
 2.  **Accede a la Aplicación**:
