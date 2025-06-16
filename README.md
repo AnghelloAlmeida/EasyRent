@@ -5,13 +5,13 @@
 - [Erick Terranova] Lider
 
 ## **Descripción de Funcionalidades**
-EasyRent es una aplicación robusta que utiliza inteligencia artificial para gestionar eficientemente propiedades inmobiliarias. Solo necesitas ingresar los detalles de la propiedad, y la aplicación te sugerirá reseñas atractivas y calculará un precio estimado (simulado).
+EasyRent es una aplicación robusta diseñada para optimizar la gestión de propiedades inmobiliarias. Solo necesitas ingresar los detalles de la propiedad, y la aplicación te **asistirá en la creación de** reseñas atractivas y **te ofrecerá una estimación de precio** (simulada), simplificando el proceso.
 
 Las funcionalidades principales incluyen:
 
 - **Gestión Integral de Propiedades**: Permite a los usuarios crear, visualizar, editar y eliminar listados de propiedades con todos sus detalles.
-- **Generación de Reseñas Personalizadas con IA**: Utiliza Google Gemini para crear automáticamente reseñas textuales, descriptivas y persuasivas para cada propiedad, elevando la calidad de los anuncios.
-- **Estimación de Precio (Simulada)**: Incluye un módulo que simula el cálculo del precio de la propiedad basándose en sus características clave.
+- **Asistencia en la Creación de Reseñas**: Hemos incorporado una funcionalidad que **sugiere y ayuda a redactar** reseñas textuales descriptivas y persuasivas para cada propiedad, **buscando elevar la calidad** de los anuncios que el usuario finaliza.
+- **Herramienta de Estimación de Precio (Simulada)**: Ofrece un módulo que **apoya al usuario en la estimación** del precio de la propiedad, proporcionando un cálculo de referencia basado en sus características clave para guiar la decisión.
 - **Autenticación y Autorización de Usuarios**: Sistema completo de registro, inicio de sesión y control de acceso seguro.
 - **Restablecimiento de Contraseña Vía Email**: Funcionalidad segura para que los usuarios puedan recuperar el acceso a sus cuentas.
 - **Gestión de Imágenes de Propiedades**: Permite subir y asociar múltiples fotografías a cada propiedad.
@@ -23,7 +23,7 @@ Las funcionalidades principales incluyen:
 - Django: Framework web de Python para un desarrollo rápido y seguro.
 - Python: Lenguaje de programación principal del backend.
 - SQLite: Base de datos por defecto para desarrollo (se recomienda PostgreSQL para producción).
-- Google Gemini API: Para la generación inteligente de reseñas de propiedades.
+- Google Gemini API: Utilizada para **procesamiento y sugerencia de texto**, como el enriquecimiento de descripciones de propiedades.
 - `python-dotenv`: Para la gestión segura de variables de entorno.
 - Django Jazzmin: Panel de administración personalizable.
 - Servicio SMTP (Gmail): Para el envío de correos electrónicos.
