@@ -232,9 +232,9 @@ Este proyecto está bajo la [Licencia MIT](LICENSE). Eres libre de usarlo, copia
 
 ## **Contacto**
 
-Para cualquier duda o comentario, por favor utiliza la siguiente dirección de correo electrónico:
+Para cualquier duda o comentario, por favor utiliza las siguientes direcciónes de correos electrónicos:
 
-aalmeidac7@unemi.edu.ec
+aalmeidac7@unemi.edu.ec, eterranovav@unemi.edu.ec
 
 ## **Créditos**
 
