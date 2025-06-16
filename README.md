@@ -46,22 +46,23 @@ El proyecto EasyRent utiliza variables de entorno para almacenar configuraciones
 
 2.  Añade las siguientes variables a tu archivo `.env`, reemplazando los valores de ejemplo con tus propias credenciales y configuraciones:
 
+    ```ini
     SECRET_KEY="tu_clave_secreta_django_aqui_generada_aleatoriamente_por_favor"
     GOOGLE_API_KEY="AIzaSyXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" # Tu clave API de Google Gemini
     EMAIL_HOST_USER="tu.correo.app@gmail.com" # Tu dirección de correo para enviar emails
     EMAIL_HOST_PASSWORD="tupassworddeaplicacionde16digitos" # La contraseña de aplicación de tu correo (generada desde Google)
     DEBUG=True # Configura a False para entornos de producción
     ALLOWED_HOSTS="127.0.0.1,localhost" # Añade tus dominios de producción aquí, separados por comas
-    
+    ```
     - `SECRET_KEY`: Una cadena de caracteres larga y aleatoria. **¡Es crucial que sea única y secreta!** Puedes generar una fácilmente ejecutando:
-        ```bash
+        ```python
         python -c 'import secrets; print(secrets.token_urlsafe(50))'
         ```
         en tu terminal.
     - `GOOGLE_API_KEY`: La clave de tu API para Google Gemini. Obténla desde [Google AI Studio](https://aistudio.google.com/) y asegúrate de que la API de Generative Language esté habilitada para tu proyecto.
     - `EMAIL_HOST_USER` y `EMAIL_HOST_PASSWORD`: Si usas Gmail para el envío de correos, `EMAIL_HOST_USER` es tu dirección de Gmail. Para `EMAIL_HOST_PASSWORD`, **debes generar una "Contraseña de Aplicación"** desde la configuración de seguridad de tu cuenta de Google si tienes la Verificación en Dos Pasos activada. **¡No uses tu contraseña de Gmail normal aquí!**
 
-4.  Es **IMPRESCINDIBLE** que añadas `/.env` a tu archivo `.gitignore`. Esto previene que tus credenciales sensibles se suban accidentalmente a repositorios públicos.
+3.  Es **IMPRESCINDIBLE** que añadas `/.env` a tu archivo `.gitignore`. Esto previene que tus credenciales sensibles se suban accidentalmente a repositorios públicos.
 
 ### Pasos de Instalación
 
@@ -85,14 +86,14 @@ El proyecto EasyRent utiliza variables de entorno para almacenar configuraciones
     ```bash
     python -m venv venv
     ```
-    Para
-    Windows:
-    `.\venv\Scripts\activate`
-
-    Para
-    macOS/Linux:
-    `source venv/bin/activate`
-
+    Para Windows:
+    ```bash
+    .\venv\Scripts\activate
+    ```
+    Para macOS/Linux:
+    ```bash
+    source venv/bin/activate
+    ```
     (Deberías ver `(venv)` al inicio de tu línea de comandos, indicando que el entorno virtual está activo).
 
 4.  **Instala las Dependencias**:
