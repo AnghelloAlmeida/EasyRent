@@ -55,13 +55,13 @@ El proyecto EasyRent utiliza variables de entorno para almacenar configuraciones
     DEBUG=True # Configura a False para entornos de producción
     ALLOWED_HOSTS="127.0.0.1,localhost" # Añade tus dominios de producción aquí, separados por comas
     ```
-    - `SECRET_KEY`: Una cadena de caracteres larga y aleatoria. **¡Es crucial que sea única y secreta!** Puedes generar una fácilmente ejecutando:
+    - SECRET_KEY: Una cadena de caracteres larga y aleatoria. ¡Es crucial que sea única y secreta! Puedes generar una fácilmente ejecutando:
         ```python
         python -c 'import secrets; print(secrets.token_urlsafe(50))'
         ```
         en tu terminal.
-    - `GOOGLE_API_KEY`: La clave de tu API para Google Gemini. Obténla desde [Google AI Studio](https://aistudio.google.com/) y asegúrate de que la API de Generative Language esté habilitada para tu proyecto.
-    - `EMAIL_HOST_USER` y `EMAIL_HOST_PASSWORD`: Si usas Gmail para el envío de correos, `EMAIL_HOST_USER` es tu dirección de Gmail. Para `EMAIL_HOST_PASSWORD`, **debes generar una "Contraseña de Aplicación"** desde la configuración de seguridad de tu cuenta de Google si tienes la Verificación en Dos Pasos activada. **¡No uses tu contraseña de Gmail normal aquí!**
+    - GOOGLE_API_KEY: La clave de tu API para Google Gemini. Obténla desde [Google AI Studio](https://aistudio.google.com/) y asegúrate de que la API de Generative Language esté habilitada para tu proyecto.
+    - EMAIL_HOST_USER y EMAIL_HOST_PASSWORD: Si usas Gmail para el envío de correos, EMAIL_HOST_USER es tu dirección de Gmail. Para EMAIL_HOST_PASSWORD, debes generar una "Contraseña de Aplicación" desde la configuración de seguridad de tu cuenta de Google si tienes la Verificación en Dos Pasos activada. ¡No uses tu contraseña de Gmail normal aquí!
 
 3.  Es **IMPRESCINDIBLE** que añadas `/.env` a tu archivo `.gitignore`. Esto previene que tus credenciales sensibles se suban accidentalmente a repositorios públicos.
 
