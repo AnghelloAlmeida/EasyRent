@@ -24,7 +24,7 @@ Las funcionalidades principales incluyen:
 - Python: Lenguaje de programación principal del backend.
 - SQLite: Base de datos por defecto para desarrollo (se recomienda PostgreSQL para producción).
 - Google Gemini API: Utilizada para **procesamiento y sugerencia de texto**, como el enriquecimiento de descripciones de propiedades.
-- `python-dotenv`: Para la gestión segura de variables de entorno.
+- python-dotenv: Para la gestión segura de variables de entorno.
 - Django Jazzmin: Panel de administración personalizable.
 - Servicio SMTP (Gmail): Para el envío de correos electrónicos.
 
