@@ -232,7 +232,7 @@ JAZZMIN_SETTINGS = {
     "changeform_format_overrides": {"auth.user": "vertical_tabs"}, # Sobrescribe el formato para el modelo User
 
     # CSS y JS personalizados
-    "custom_css": "admin/css/my_jazzmin_theme.css", # Ruta a tu CSS personalizado para el admin
+    "custom_css": "admin/vendor/my_jazzmin_theme.css", # Ruta a tu CSS personalizado para el admin
     "custom_js": None, # Ruta a tu JS personalizado para el admin
 
     "show_ui_builder": True, # Permite usar el UI Builder de Jazzmin para ajustar el tema visualmente

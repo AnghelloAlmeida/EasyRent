@@ -1,8 +1,9 @@
 {# propiedades/templates/propiedades/base.html #}
+
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,68 +18,60 @@
             <a href="{% url 'welcome_page' %}" class="logo">EasyRent</a>
             <nav class="main-nav">
                 <ul>
-                    {# Definimos una variable para la URL actual para comparaciones limpias #}
                     {% with current_url_name=request.resolver_match.url_name %}
-                    <li>
-                        <a href="{% url 'user_dashboard' %}" class="{% if current_url_name == 'user_dashboard' %}active{% endif %}">Menú Principal</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'lista_propiedades_frontend' %}" class="{% if current_url_name == 'lista_propiedades_frontend' %}active{% endif %}">Propiedades</a>
-                    </li>
-                    {% if user.is_authenticated %}
-                    <li>
-                        <a href="{% url 'mis_propiedades_frontend' %}" class="{% if current_url_name == 'mis_propiedades_frontend' %}active{% endif %}">Mis Propiedades</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'agregar_propiedad_frontend' %}" class="{% if current_url_name == 'agregar_propiedad_frontend' %}active{% endif %}">Publicar Propiedad</a>
-                    </li>
-                    {# --- ¡NUEVO ENLACE AQUI! --- #}
-                    <li>
-                        <a href="{% url 'estimar_precio_propiedad' %}" class="{% if current_url_name == 'estimar_precio_propiedad' %}active{% endif %}">Estimar Precio</a>
-                    </li>
-                    {# ------------------------- #}
-                    {% endif %}
+                        <li>
+                            <a href="{% url 'user_dashboard' %}" class="{% if current_url_name == 'user_dashboard' %}active{% endif %}">Menú Principal</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'lista_propiedades_frontend' %}" class="{% if current_url_name == 'lista_propiedades_frontend' %}active{% endif %}">Propiedades</a>
+                        </li>
+                        {% if user.is_authenticated %}
+                            <li>
+                                <a href="{% url 'mis_propiedades_frontend' %}" class="{% if current_url_name == 'mis_propiedades_frontend' %}active{% endif %}">Mis Propiedades</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'agregar_propiedad_frontend' %}" class="{% if current_url_name == 'agregar_propiedad_frontend' %}active{% endif %}">Publicar Propiedad</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'estimar_precio_propiedad' %}" class="{% if current_url_name == 'estimar_precio_propiedad' %}active{% endif %}">Estimar Precio</a>
+                            </li>
+                        {% endif %}
                     {% endwith %}
                 </ul>
             </nav>
+
             <div class="user-actions">
                 {% if user.is_authenticated %}
-                {# **INICIO: Contenedor para la foto de perfil, el saludo y el botón "Editar Perfil"** #}
-                <div class="profile-area">
-                    {# La imagen de perfil es el ÚNICO elemento clicable aquí para llevar al perfil de edición #}
-                    <a href="{% url 'edit_profile' %}" class="profile-link">
-                        {% comment %} Asegurarse de que user.profile.image exista antes de intentar acceder a .url {% endcomment %}
-                        {% if user.profile.image %}
-                            <img src="{{ user.profile.image.url }}" alt="Perfil" class="profile-img">
-                        {% else %}
-                            <img src="{% static 'profile_pics/default.jpg' %}" alt="Perfil" class="profile-img">
-                        {% endif %}
-                    </a>
-                    {# El texto "Hola, Fernando!" NO es clicable, está en un span separado #}
-                    <span class="user-greeting">Hola, {{ user.first_name|default:user.username }}!</span>
-                    {# El botón "Editar Perfil" SÍ es clicable y con la clase corregida #}
-                    <a href="{% url 'edit_profile' %}" class="btn-profile-edit">Editar Perfil</a>
-                </div>
-                {# **FIN: Contenedor para la foto de perfil, el saludo y el botón "Editar Perfil"** #}
+                    <div class="profile-area">
+                        <a href="{% url 'edit_profile' %}" class="profile-link">
+                            {% if user.profile.image %}
+                                <img src="{{ user.profile.image.url }}" alt="Perfil" class="profile-img">
+                            {% else %}
+                                <img src="{% static 'profile_pics/default.jpg' %}" alt="Perfil" class="profile-img">
+                            {% endif %}
+                        </a>
+                        <span class="user-greeting">Hola, {{ user.first_name|default:user.username }}!</span>
+                        <a href="{% url 'edit_profile' %}" class="btn-profile-edit">Editar Perfil</a>
+                    </div>
 
-                <form action="{% url 'logout' %}" method="post" style="display: inline; margin-left: 15px;">
-                    {% csrf_token %}
-                    <button type="submit" class="btn-logout">Cerrar Sesión</button>
-                </form>
+                    <form action="{% url 'logout' %}" method="post" style="display: inline; margin-left: 15px;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-logout">Cerrar Sesión</button>
+                    </form>
                 {% else %}
-                <a href="{% url 'login' %}" class="btn-login">Iniciar Sesión</a>
-                <a href="{% url 'signup' %}" class="btn-register">Registrarse</a>
+                    <a href="{% url 'login' %}" class="btn-login">Iniciar Sesión</a>
+                    <a href="{% url 'signup' %}" class="btn-register">Registrarse</a>
                 {% endif %}
             </div>
         </div>
     </header>
 
     {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-        <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
             {% endfor %}
-    </ul>
+        </ul>
     {% endif %}
 
     <main class="main-container">
@@ -91,7 +84,5 @@
 
     {% block extra_js %}
     {% endblock %}
-
 </body>
-
 </html>

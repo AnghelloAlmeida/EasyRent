@@ -32,6 +32,20 @@
             <a href="{% url 'lista_propiedades_frontend' %}" class="btn-dashboard">Buscar Propiedades</a>
         </div>
 
+        {# NUEVO WIDGET para Estadísticas de IA #}
+        <div class="widget-card">
+            <h2>Estadísticas de IA</h2>
+            <p>Mira la distribución de calificaciones que nuestra IA ha generado para tus propiedades.</p>
+            <a href="{% url 'ia_estadisticas' %}" class="btn-dashboard">Ver Estadísticas IA</a>
+        </div>
+
+        {# NUEVO WIDGET para el Estimador de Precios #}
+        <div class="widget-card">
+            <h2>Estimador de Precios</h2>
+            <p>Obtén una estimación del precio de alquiler de una propiedad.</p>
+            <a href="{% url 'estimar_precio_propiedad' %}" class="btn-dashboard">Estimar Precio</a>
+        </div>
+
         {# El widget "Editar Perfil" ha sido movido a la barra de navegación, por lo que se elimina de aquí #}
     </div>
 </div>

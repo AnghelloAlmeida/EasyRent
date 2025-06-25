@@ -1,19 +1,24 @@
-# propiedades/views.py
-
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.db.models import Q
+# Importaciones para consultas de base de datos
+from django.db.models import Q, Avg, Count # Incluye Avg y Count para estadísticas
 from django.views.generic import CreateView
 from django.urls import reverse_lazy
 from django.contrib.auth.models import User
 from django.template.loader import render_to_string
 from django.http import HttpResponse, JsonResponse
 
+import json # Importa json para manejar datos para Chart.js
+import logging # Importa logging para registrar errores de IA
+
+# Configura un logger para tu aplicación
+logger = logging.getLogger(__name__)
+
 from .models import Propiedad, TIPO_PROPIEDAD_CHOICES, Profile
 from .forms import PropiedadForm, UserRegisterForm, UserProfileForm, ProfileUpdateForm
 from .price_estimator import estimate_price
-from .ai_generator import generate_ia_review_and_rating # <--- NUEVA IMPORTACIÓN
+from .ai_generator import generate_ia_review_and_rating
 
 
 # --- Función Auxiliar para Filtrar Propiedades ---
@@ -184,14 +189,29 @@ def agregar_propiedad_frontend(request):
                 'caracteristicas_adicionales': propiedad.caracteristicas_adicionales,
             }
 
-            # Generar reseña y calificación con la IA
-            ia_review, ia_rating = generate_ia_review_and_rating(property_data)
-            propiedad.ia_reseña_generada = ia_review
-            propiedad.ia_calificacion = ia_rating
+            # --- INICIO DEL BLOQUE TRY-EXCEPT PARA LA IA ---
+            try:
+                ia_review, ia_rating = generate_ia_review_and_rating(property_data)
+                propiedad.ia_reseña_generada = ia_review
+                propiedad.ia_calificacion = ia_rating
+                messages.success(request, '¡Propiedad agregada exitosamente y reseña IA generada!')
+            except Exception as e:
+                # Si la IA falla (por API Key inválida o cualquier otro motivo), asigna valores predeterminados
+                # y muestra un mensaje de error al usuario.
+                propiedad.ia_reseña_generada = "No fue posible generar una reseña avanzada para esta propiedad debido a un error con la IA."
+                propiedad.ia_calificacion = 0 # Asigna un valor por defecto, por ejemplo, 0 o None
+                messages.warning(request, f"Propiedad agregada, pero hubo un error al generar la reseña IA: {e}. Por favor, verifica tu clave API de Gemini.")
+                # Registra el error completo para depuración en la consola/logs de Django
+                logger.error(f"Error al llamar a la API de Gemini al agregar propiedad: {e}")
+            # --- FIN DEL BLOQUE TRY-EXCEPT PARA LA IA ---
 
-            propiedad.save() # Guarda la propiedad con los datos de la IA
-            messages.success(request, '¡Propiedad agregada exitosamente y reseña IA generada!')
+            propiedad.save() # Guarda la propiedad con o sin los datos de la IA
+            # La redirección se hace después del save, independientemente de si la IA funcionó
             return redirect('mis_propiedades_frontend')
+        else: # Bloque para manejar formularios inválidos
+            messages.error(request, 'Error al guardar la propiedad. Por favor, revisa los campos del formulario.')
+            # Opcional: imprimir los errores del formulario en la consola para depuración
+            # print(form.errors)
     else:
         form = PropiedadForm()
     return render(request, 'propiedades/agregar_propiedad.html', {'form': form})
@@ -218,14 +238,27 @@ def editar_propiedad_frontend(request, pk):
                 'caracteristicas_adicionales': propiedad.caracteristicas_adicionales,
             }
 
-            # Generar reseña y calificación con la IA (se regenera con cada edición)
-            ia_review, ia_rating = generate_ia_review_and_rating(property_data)
-            propiedad.ia_reseña_generada = ia_review
-            propiedad.ia_calificacion = ia_rating
+            # --- INICIO DEL BLOQUE TRY-EXCEPT PARA LA IA ---
+            try:
+                ia_review, ia_rating = generate_ia_review_and_rating(property_data)
+                propiedad.ia_reseña_generada = ia_review
+                propiedad.ia_calificacion = ia_rating
+                messages.success(request, '¡Propiedad actualizada exitosamente y reseña IA regenerada!')
+            except Exception as e:
+                # Si la IA falla, asigna valores predeterminados y muestra un mensaje de error al usuario.
+                propiedad.ia_reseña_generada = "No fue posible generar una reseña avanzada para esta propiedad debido a un error con la IA."
+                propiedad.ia_calificacion = 0 # Asigna un valor por defecto
+                messages.warning(request, f"Propiedad actualizada, pero hubo un error al regenerar la reseña IA: {e}. Por favor, verifica tu clave API de Gemini.")
+                # Registra el error completo para depuración
+                logger.error(f"Error al llamar a la API de Gemini durante edición: {e}")
+            # --- FIN DEL BLOQUE TRY-EXCEPT PARA LA IA ---
 
-            propiedad.save() # Guarda la propiedad con los datos de la IA actualizados
-            messages.success(request, '¡Propiedad actualizada exitosamente y reseña IA regenerada!')
+            propiedad.save() # Guarda la propiedad con o sin los datos de la IA actualizados
             return redirect('detalle_propiedad_frontend', pk=propiedad.pk)
+        else: # Bloque para manejar formularios inválidos
+            messages.error(request, 'Error al actualizar la propiedad. Por favor, revisa los campos del formulario.')
+            # Opcional: imprimir los errores del formulario en la consola para depuración
+            # print(form.errors)
     else:
         form = PropiedadForm(instance=propiedad)
     return render(request, 'propiedades/editar_propiedad.html', {'form': form, 'propiedad': propiedad})
@@ -320,8 +353,9 @@ def estimar_precio_propiedad(request):
             # Capturar errores de conversión de tipo
             return JsonResponse({'error': f'Datos de entrada inválidos: {e}'}, status=400)
         except Exception as e:
-            # Capturar cualquier otro error inesperado
-            return JsonResponse({'error': f'Error interno del servidor: {e}'}, status=500)
+            # Capturar cualquier otro error inesperado y registrarlo
+            logger.error(f"Error en la estimación de precio de propiedad: {e}")
+            return JsonResponse({'error': f'Error interno del servidor al estimar precio: {e}'}, status=500)
     else:
         # Renderizar la página con el formulario para la estimación si es una petición GET
         ciudades_disponibles = Propiedad.objects.values_list('ciudad', flat=True).distinct().order_by('ciudad')
@@ -330,3 +364,35 @@ def estimar_precio_propiedad(request):
             'ciudades_disponibles': ciudades_disponibles,
         }
         return render(request, 'propiedades/estimar_precio.html', context)
+
+# --- NUEVA VISTA PARA ESTADÍSTICAS DE RESEÑAS IA ---
+@login_required
+def estadisticas_ia_review(request):
+    # Calcula la distribución de calificaciones de IA
+    rating_distribution_data = Propiedad.objects.filter(
+        ia_calificacion__isnull=False # Asegura que solo contamos propiedades con una calificación de IA
+    ).values('ia_calificacion').annotate(
+        count=Count('ia_calificacion')
+    ).order_by('ia_calificacion')
+
+    # Asegurarse de que todas las calificaciones (1-5) estén presentes, incluso si su cuenta es 0
+    full_distribution = {i: 0 for i in range(1, 6)} # Inicializa con 0 para cada calificación
+    for item in rating_distribution_data:
+        # Solo agrega al diccionario si la calificación está en nuestro rango esperado (1-5)
+        if item['ia_calificacion'] in full_distribution:
+            full_distribution[item['ia_calificacion']] = item['count']
+
+    # Formatear para Chart.js: dos listas, una para las etiquetas y otra para los datos
+    labels = [f"{rating} Estrellas" for rating in sorted(full_distribution.keys())]
+    data = [full_distribution[rating] for rating in sorted(full_distribution.keys())]
+
+    # Convertir a JSON string para pasar de forma segura a la plantilla
+    chart_data_json = json.dumps({
+        'labels': labels,
+        'data': data
+    })
+
+    context = {
+        'chart_data_json': chart_data_json,
+    }
+    return render(request, 'propiedades/ia_statistics.html', context)

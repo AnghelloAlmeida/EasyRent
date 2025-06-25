@@ -16,7 +16,11 @@ urlpatterns = [
     path('dashboard/', views.user_dashboard_view, name='user_dashboard'),
     path('edit-profile/', views.edit_profile, name='edit_profile'),
 
-    # --- NUEVA URL PARA LA ESTIMACIÓN DE PRECIOS ---
+    # --- URL PARA LA ESTIMACIÓN DE PRECIOS (YA LA TENÍAS) ---
     path('estimar-precio/', views.estimar_precio_propiedad, name='estimar_precio_propiedad'),
-    # -----------------------------------------------
+    # --------------------------------------------------------
+
+    # --- NUEVA URL PARA LAS ESTADÍSTICAS DE RESEÑAS IA ---
+    path('ia-estadisticas/', views.estadisticas_ia_review, name='ia_estadisticas'),
+    # -----------------------------------------------------
 ]
