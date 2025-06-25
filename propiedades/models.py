@@ -40,9 +40,8 @@ class Propiedad(models.Model):
 
     # Nuevos campos para la integración de IA
     ia_reseña_generada = models.TextField(blank=True, null=True, verbose_name="Reseña IA")
-    ia_calificacion = models.IntegerField(blank=True, null=True,
-                                        choices=[(i, str(i)) for i in range(1, 6)],
-                                        verbose_name="Calificación IA (1-5)")
+    # CAMBIO AQUÍ: FloatField para permitir decimales en la calificación
+    ia_calificacion = models.FloatField(blank=True, null=True, verbose_name="Calificación IA")
 
     def __str__(self):
         return self.titulo

@@ -28,7 +28,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'jazzmin',  # ¡IMPORTANTE: debe estar antes de django.contrib.admin para que Jazzmin funcione correctamente!
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -54,7 +54,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [os.path.join(BASE_DIR, 'templates')], # Directorio para templates globales del proyecto
-        'APP_DIRS': True, # Crucial para que Django busque templates dentro de cada aplicación (incluyendo Jazzmin y propiedades)
+        'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
